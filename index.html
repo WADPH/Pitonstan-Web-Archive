@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitonstan Web Archive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #8B0000;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .site-card {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border-left: 4px solid #8B0000;
+        }
+        .site-card:hover {
+            background: #e9e9e9;
+            transform: translateX(5px);
+        }
+        .site-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            width: 40px;
+            text-align: center;
+        }
+        .site-info {
+            flex-grow: 1;
+        }
+        .site-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .site-desc {
+            color: #666;
+            font-size: 14px;
+        }
+        .site-link {
+            text-decoration: none;
+            color: #8B0000;
+            font-weight: bold;
+            padding: 8px 15px;
+            border: 2px solid #8B0000;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .site-link:hover {
+            background: #8B0000;
+            color: white;
+        }
+        .search-box {
+            margin-bottom: 30px;
+            display: flex;
+        }
+        .search-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        .search-button {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            margin-left: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            .site-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .site-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Pitonstan Web Archive</h1>
+
+    <div class="search-box">
+        <input type="text" class="search-input" placeholder="Type name of website...">
+        <button class="search-button">Tear</button>
+    </div>
+
+    <div class="sites-list">
+        <div class="site-card">
+            <div class="site-icon">📢</div>
+            <div class="site-info">
+                <div class="site-title">PitonTV</div>
+                <div class="site-desc">News of the Pitonstan</div>
+            </div>
+            <a href="pitontv/index.html" class="site-link">Go!</a>
+        </div>
+
+        <div class="site-card">
+            <div class="site-icon">🚩</div>
+            <div class="site-info">
+                <div class="site-title">Pitonstan Goverment</div>
+                <div class="site-desc">Offcial website of Pitonstan</div>
+            </div>
+            <a href="pitonstan/index.html" class="site-link">Go!</a>
+        </div>
+
+        <div class="site-card">
+            <div class="site-icon">✈</div>
+            <div class="site-info">
+                <div class="site-title">Piton Airlines</div>
+                <div class="site-desc">Best trips for you</div>
+            </div>
+            <a href="pitonairlines/index.html" class="site-link">Go!</a>
+        </div>
+
+        <div class="site-card">
+            <div class="site-icon">🛍</div>
+            <div class="site-info">
+                <div class="site-title">PitonShop</div>
+                <div class="site-desc">Buy anything you want</div>
+            </div>
+            <a href="pitonshop/index.html" class="site-link">Go!</a>
+        </div>
+
+        <div class="site-card">
+            <div class="site-icon">💳</div>
+            <div class="site-info">
+                <div class="site-title">PitBank</div>
+                <div class="site-desc">PitBank on your device</div>
+            </div>
+            <a href="pitbank/index.php" class="site-link">Go!</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Search func
+    document.querySelector('.search-button').addEventListener('click', function() {
+        const searchText = document.querySelector('.search-input').value.toLowerCase();
+        const cards = document.querySelectorAll('.site-card');
+
+        cards.forEach(card => {
+            const title = card.querySelector('.site-title').textContent.toLowerCase();
+            const desc = card.querySelector('.site-desc').textContent.toLowerCase();
+
+            if (title.includes(searchText) || desc.includes(searchText)) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+
+    // Search via Enter
+    document.querySelector('.search-input').addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+            document.querySelector('.search-button').click();
+        }
+    });
+</script>
+</body>
+</html>
