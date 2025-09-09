@@ -1,5 +1,6 @@
 # 👞 About Project:
-PitBank is a website of Pitonstan<br>There will be money transfer and chat function also
+Pitonstan Web Arhive is list of the websites of Pitonstan<br>This web archive includes:<br>PitonTV — as a static web page<br>PitShop — as a static web page<br>PitonAirlines — as a static web page 
+<br>Pitonstan Gov.<br>PitBank — PHP + MySQL DB 
 
 
 # 💻 This project includes:
