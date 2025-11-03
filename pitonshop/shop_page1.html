@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size:16px;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piton Shop — Catalog</title>
+  <link rel="icon" type="image/png" href="images/Pitonshop1.png">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Open Sans', sans-serif;
+      background-color: #121212; /* keep same dark bg as index */
+      color: #eaeaea;
+      line-height: 1.6;
+    }
+
+    /* ===== HEADER BLOCK (copied style from index.html) ===== */
+    header {
+      background: linear-gradient(90deg, #1e1e1e, #2c2c2c);
+      border-bottom: 3px solid #ffcc66;
+      padding: 10px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .logo img {
+      height: 85px;
+      width: auto;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: #ffcc66; }
+
+    /* Language switch buttons */
+    .lang-switch {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 1px solid #ffcc66;
+      color: #ffcc66;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn:hover,
+    .lang-btn.active {
+      background: #ffcc66;
+      color: #1a1a1a;
+    }
+
+    /* Burger menu same logic as index.html */
+    .menu-icon {
+      display: none;
+      font-size: 2rem;
+      color: #ffcc66;
+      cursor: pointer;
+      padding-right: 20px;
+    }
+
+    #menu-toggle { display: none; }
+
+    @media (max-width: 768px) {
+      .menu-icon {
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      nav ul {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background: #1a1a1a;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        border-top: 2px solid #ffcc66;
+        padding: 10px 0;
+      }
+
+      nav ul li {
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+      }
+
+      /* show menu when checkbox checked */
+      #menu-toggle:checked ~ nav ul {
+        display: flex;
+      }
+
+      .lang-switch {
+        margin-top: 10px;
+      }
+    }
+
+    /* ===== PAGE CONTENT STYLES (catalog layout) ===== */
+
+    main {
+      flex: 1;
+    }
+
+    section {
+      padding: 40px 5%;
+      border-bottom: 1px solid #222;
+    }
+
+    /* section title */
+    h2.section-title {
+      color: #ffcc66;
+      border-left: 4px solid #ffcc66;
+      padding-left: 10px;
+      font-size: 1.6rem;
+      margin-top: 0;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      margin-top: 25px;
+    }
+
+    .item {
+      background: #1a1a1a;
+      border: 1px solid #292929;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      transition: all .3s ease;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 20px rgba(255,204,102,0.2);
+    }
+
+    .item img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      border-bottom: 1px solid #333;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      color: #ffcc66;
+      font-weight: bold;
+    }
+
+    .buy-btn {
+      display: inline-block;
+      background: #ffcc66;
+      color: #000;
+      padding: 8px 18px;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-weight: 700;
+      transition: 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .buy-btn:hover {
+      background: #ffd87f;
+      transform: scale(1.05);
+    }
+
+    /* "Next page" button */
+    .next-btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #ffcc66, #e6b84d);
+      color: #000;
+      padding: 12px 25px;
+      font-weight: 700;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: 0.3s;
+      margin: 50px auto;
+      display: block;
+      text-align: center;
+      width: fit-content;
+    }
+
+    .next-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 15px rgba(255,204,102,0.4);
+    }
+
+    /* ===== FOOTER (copied visual style) ===== */
+    footer {
+      background: #0b0b0b;
+      color: #ccc;
+      text-align: center;
+      padding: 25px 15px;
+      border-top: 3px solid #ffcc66;
+      font-family: 'Oswald', sans-serif;
+      margin-top: auto;
+    }
+
+    footer p { margin: 6px 0; font-size: 0.9rem; }
+    footer b { color: #ffcc66; }
+
+    /* ===== MODAL ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #1a1a1a;
+      padding: 40px;
+      border: 2px solid #ffcc66;
+      border-radius: 10px;
+      text-align: center;
+      color: #ffcc66;
+      width: 350px;
+      position: relative;
+      box-shadow: 0 0 25px rgba(255,204,102,0.3);
+    }
+
+    .modal img {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+
+    .modal button {
+      background: none;
+      border: 2px solid #ffcc66;
+      color: #ffcc66;
+      border-radius: 5px;
+      padding: 8px 18px;
+      margin-top: 15px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .modal button:hover {
+      background: #ffcc66;
+      color: #000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER (identical structure to index.html) -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <img src="images/logo/logo.png" alt="PitonShop Logo">
+      </div>
+
+      <!-- burger checkbox -->
+      <input type="checkbox" id="menu-toggle">
+      <label for="menu-toggle" class="menu-icon">☰</label>
+
+      <nav>
+        <ul>
+          <li><a href="index.html" data-lang="home">Home</a></li>
+          <li><a href="shop_page1.html" data-lang="catalog">Catalog</a></li>
+          <li><a href="contacts.html" data-lang="contacts">Contacts</a></li>
+          <li class="lang-switch">
+            <button class="lang-btn active" data-langset="en">EN</button>
+            <button class="lang-btn" data-langset="ru">RU</button>
+            <button class="lang-btn" data-langset="az">AZ</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- CLOTHES -->
+    <section>
+      <h2 class="section-title" data-lang="cat_clothes">Category: Clothes</h2>
+      <div class="catalog-grid">
+
+        <div class="item">
+          <img src="images/blacktshirt.jpg" alt="Black T-shirt">
+          <h3 data-lang="item_black_tshirt_name">PitCloth Black T-Shirt</h3>
+          <p class="price">17 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/bluetshirt.png" alt="Blue T-shirt">
+          <h3 data-lang="item_blue_tshirt_name">PitCloth Blue T-Shirt</h3>
+          <p class="price">15 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/blackzorTshirt.jpg" alt="Black Print T-shirt">
+          <h3 data-lang="item_black_print_tshirt_name">PitCloth Black Printed T-Shirt</h3>
+          <p class="price">20 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/redtshirt.png" alt="Red T-shirt">
+          <h3 data-lang="item_red_tshirt_name">PitCloth Red T-Shirt</h3>
+          <p class="price">15 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/DJIRTSHIRT.jpg" alt="Cirig Grey T-Shirt">
+          <h3 data-lang="item_cirig_shirt_name">PitCloth Series "Cirig" Grey T-Shirt</h3>
+          <p class="price">150 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/shgouldersplusutkonosgift.png" alt="Jeans + UltraNose Gift">
+          <h3 data-lang="item_jeans_platypus_name">PitCloth Jeans + UltraNose Platypus Gift</h3>
+          <p class="price">120 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/ShortShoulders.jpg" alt="Blue Shorts">
+          <h3 data-lang="item_blue_shorts_name">PitCloth Blue Shorts</h3>
+          <p class="price">17 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/sohuldersdefaultpng.png" alt="Blue Jeans">
+          <h3 data-lang="item_blue_jeans_name">PitCloth Blue Jeans</h3>
+          <p class="price">20 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/jirtshoulders.png" alt="Ripped Jeans">
+          <h3 data-lang="item_ripped_jeans_name">PitCloth Ripped Jeans</h3>
+          <p class="price">200 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PREMIUM -->
+    <section>
+      <h2 class="section-title" data-lang="cat_premium">Category: Premium</h2>
+      <div class="catalog-grid">
+
+        <div class="item">
+          <img src="images/Kabluk.jpg" alt="UltraNose Women Edition">
+          <h3 data-lang="item_ultra_women_name">UltraNose Full Lak Women Edition</h3>
+          <p class="price">7.500 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/FULLLLLLAK.jpg" alt="UltraNose Mirror Edition">
+          <h3 data-lang="item_ultra_mirror_name">UltraNose Full Lak Mirror Edition</h3>
+          <p class="price">20.000 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/utkonos2.png" alt="UltraNose Platypus">
+          <h3 data-lang="item_ultra_platypus_name">UltraNose Full Lak Platypus</h3>
+          <p class="price">2.300 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/UYYYYPITON.jpg" alt="UltraNose Special">
+          <h3 data-lang="item_ultra_special_name">UltraNose Full Lak Special</h3>
+          <p class="price">7.500 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/utkonos.png" alt="UltraNose Budget">
+          <h3 data-lang="item_ultra_budget_name">UltraNose Budget Platypus</h3>
+          <p class="price">100 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/taxtautkonos.png" alt="UltraNose Taxta">
+          <h3 data-lang="item_ultra_taxta_name">UltraNose Taxta Platypus</h3>
+          <p class="price">1.500 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/obqoreliy.jpg" alt="UltraNose Taxta Lak">
+          <h3 data-lang="item_ultra_taxta_lak_name">UltraNose Taxta Lak Platypus</h3>
+          <p class="price">2.500 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/GOLD.jpg" alt="UltraNose Gold Edition">
+          <h3 data-lang="item_ultra_gold_name">UltraNose Full Lak Gold Edition</h3>
+          <p class="price">45.000 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/gt4.jpg" alt="PVIDIA GPU">
+          <h3 data-lang="item_gpu_name">PVIDIA GATAIKIS 1001010110110 GPU</h3>
+          <p class="price">5 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ARMS -->
+    <section>
+      <h2 class="section-title" data-lang="cat_arms">Category: Armament</h2>
+      <div class="catalog-grid">
+
+        <div class="item">
+          <img src="images/abrams.jpg" alt="Tank P-10">
+          <h3 data-lang="item_tank_p10_name">Tank P-10</h3>
+          <p class="price">3.250.000 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/b2avia.png" alt="Bomber EKB-1">
+          <h3 data-lang="item_ekb1_name">Bomber EKB-1</h3>
+          <p class="price">1.500.000 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/BOMBORDIR.jpg" alt="Bomber EKB-11">
+          <h3 data-lang="item_ekb11_name">Bomber EKB-11</h3>
+          <p class="price">7.500.000 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/416.jpg" alt="FSA-1">
+          <h3 data-lang="item_fsa1_name">FSA-1</h3>
+          <p class="price">2.500 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/137f9366-8510-55dc-3308-3c08af0434df.jpg" alt="Artillery REP-5">
+          <h3 data-lang="item_rep5_name">Artillery REP-5</h3>
+          <p class="price">1.500.000 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/bespilot.jpg" alt="BUP-14 Drone">
+          <h3 data-lang="item_bup14_name">BUP-14 Drone</h3>
+          <p class="price">200.000 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/usp.jpg" alt="PG-1">
+          <h3 data-lang="item_pg1_name">PG-1</h3>
+          <p class="price">1.000 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/AK.jpg" alt="FSA-76">
+          <h3 data-lang="item_fsa76_name">FSA-76</h3>
+          <p class="price">3.600 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/tank72.jpg" alt="Tank P-12">
+          <h3 data-lang="item_tank_p12_name">Tank P-12</h3>
+          <p class="price">2.500.000 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/Zelenskiy.jpg" alt="Script">
+          <h3 data-lang="item_script_name">/smuzi_samirs_eqqaf.bat</h3>
+          <p class="price">0.10 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/millitaryhelicop.jpg" alt="Helicopter QKU-39">
+          <h3 data-lang="item_qku39_name">Helicopter QKU-39</h3>
+          <p class="price">1.780.000 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/Deagle.jpg" alt="PG-2">
+          <h3 data-lang="item_pg2_name">PG-2</h3>
+          <p class="price">1.200 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/glock.jpg" alt="PG-3">
+          <h3 data-lang="item_pg3_name">PG-3</h3>
+          <p class="price">1.300 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+        <div class="item">
+          <img src="images/hellicoptermil.jpeg" alt="Helicopter QKU-1">
+          <h3 data-lang="item_qku1_name">Helicopter QKU-1</h3>
+          <p class="price">1.270.000 USD</p>
+          <button class="buy-btn" onclick="openModal()" data-lang="buy_btn">BUY</button>
+        </div>
+
+      </div>
+    </section>
+
+    <a href="shop_page2.html" class="next-btn" data-lang="continue_btn">Continue →</a>
+
+  </main>
+
+  <footer>
+    <p data-lang="footer_line1">© 2022–2030 Piton Shop. All rights reserved.</p>
+    <p><b data-lang="footer_line2">Republic of Pitonstan</b></p>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <img src="images/SmuFoq.png" alt="Error">
+      <h3 data-lang="modal_title">ERROR</h3>
+      <p data-lang="modal_text">
+        YOU ARE NOT IN PITONSTAN.<br>
+        THEREFORE YOU CANNOT PURCHASE ITEMS.
+      </p>
+      <button onclick="closeModal()" data-lang="modal_close">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // translations object: same structure and keys used via data-lang
+    // price keys removed because price is static for all languages
+    const translations = {
+      ru: {
+        home: "Главная",
+        catalog: "Каталог",
+        contacts: "Контакты",
+
+        cat_clothes: "Категория: Одежда",
+        cat_premium: "Категория: Премиум",
+        cat_arms: "Категория: Вооружение",
+
+        item_black_tshirt_name: "PitCloth Чёрная Футболка",
+        item_blue_tshirt_name: "PitCloth Синяя Футболка",
+        item_black_print_tshirt_name: "PitCloth Чёрная Футболка с Принтом",
+        item_red_tshirt_name: "PitCloth Красная Футболка",
+        item_cirig_shirt_name: "PitCloth Серии \"Cirig\" Серая Футболка",
+        item_jeans_platypus_name: "PitCloth Джинсы + UltraNose Утконос",
+        item_blue_shorts_name: "PitCloth Синие Шорты",
+        item_blue_jeans_name: "PitCloth Синие Джинсы",
+        item_ripped_jeans_name: "PitCloth Порванные Джинсы",
+
+        item_ultra_women_name: "UltraNose Full Lak Women Edition",
+        item_ultra_mirror_name: "UltraNose Full Lak Mirror Edition",
+        item_ultra_platypus_name: "UltraNose Full Lak Утканосы",
+        item_ultra_special_name: "UltraNose Full Lak Special",
+        item_ultra_budget_name: "UltraNose Budget Утканос",
+        item_ultra_taxta_name: "UltraNose Taxta Утканосы",
+        item_ultra_taxta_lak_name: "UltraNose Taxta Lak Утканосы",
+        item_ultra_gold_name: "UltraNose Full Lak Gold Edition",
+        item_gpu_name: "Видеокарта PVIDIA GATAIKIS 1001010110110",
+
+        item_tank_p10_name: "Танк P-10",
+        item_ekb1_name: "Бомбардировщик EKB-1",
+        item_ekb11_name: "Бомбардировщик EKB-11",
+        item_fsa1_name: "Автомат FSA-1",
+        item_rep5_name: "Артиллерия REP-5",
+        item_bup14_name: "Беспилотник BUP-14",
+        item_pg1_name: "Пистолет PG-1",
+        item_fsa76_name: "Автомат FSA-76",
+        item_tank_p12_name: "Танк P-12",
+        item_script_name: "/smuzi_samirs_eqqaf.bat",
+        item_qku39_name: "Вертолет QKU-39",
+        item_pg2_name: "Пистолет PG-2",
+        item_pg3_name: "Пистолет PG-3",
+        item_qku1_name: "Вертолет QKU-1",
+
+        buy_btn: "КУПИТЬ",
+
+        continue_btn: "Продолжить просмотр →",
+
+        footer_line1: "© 2022–2030 Piton Shop. Все права защищены.",
+        footer_line2: "Republic of Pitonstan",
+
+        modal_title: "ОШИБКА",
+        modal_text: "ВЫ НЕ НАХОДИТЕСЬ В PITONSTAN'Е.<br>СЛЕДОВАТЕЛЬНО, ВЫ НЕ МОЖЕТЕ ПРИОБРЕТАТЬ ТОВАРЫ!",
+        modal_close: "Закрыть"
+      },
+
+      az: {
+        home: "Əsas səhifə",
+        catalog: "Kataloq",
+        contacts: "Əlaqə",
+
+        cat_clothes: "Kateqoriya: Geyim",
+        cat_premium: "Kateqoriya: Premium",
+        cat_arms: "Kateqoriya: Silahlanma",
+
+        item_black_tshirt_name: "PitCloth Qara Köynək",
+        item_blue_tshirt_name: "PitCloth Mavi Köynək",
+        item_black_print_tshirt_name: "PitCloth Printli Qara Köynək",
+        item_red_tshirt_name: "PitCloth Qırmızı Köynək",
+        item_cirig_shirt_name: "PitCloth \"Cirig\" Seriyası Boz Köynək",
+        item_jeans_platypus_name: "PitCloth Cinslər + UltraNose Dimdikli Hədiyyə",
+        item_blue_shorts_name: "PitCloth Mavi Şortlar",
+        item_blue_jeans_name: "PitCloth Mavi Cins Şalvar",
+        item_ripped_jeans_name: "PitCloth Cırılmış Cins Şalvar",
+
+        item_ultra_women_name: "UltraNose Full Lak Women Edition",
+        item_ultra_mirror_name: "UltraNose Full Lak Mirror Edition",
+        item_ultra_platypus_name: "UltraNose Full Lak Dimdikli",
+        item_ultra_special_name: "UltraNose Full Lak Special",
+        item_ultra_budget_name: "UltraNose Budget Dimdikli",
+        item_ultra_taxta_name: "UltraNose Taxta Dimdikli",
+        item_ultra_taxta_lak_name: "UltraNose Taxta Lak Dimdikli",
+        item_ultra_gold_name: "UltraNose Full Lak Gold Edition",
+        item_gpu_name: "PVIDIA GATAIKIS 1001010110110 GPU",
+
+        item_tank_p10_name: "Tank P-10",
+        item_ekb1_name: "Bombardmançı EKB-1",
+        item_ekb11_name: "Bombardmançı EKB-11",
+        item_fsa1_name: "FSA-1",
+        item_rep5_name: "Artilleriya REP-5",
+        item_bup14_name: "BUP-14 PUA",
+        item_pg1_name: "PG-1",
+        item_fsa76_name: "FSA-76",
+        item_tank_p12_name: "Tank P-12",
+        item_script_name: "/smuzi_samirs_eqqaf.bat",
+        item_qku39_name: "Vertolyot QKU-39",
+        item_pg2_name: "PG-2",
+        item_pg3_name: "PG-3",
+        item_qku1_name: "Vertolyot QKU-1",
+
+        buy_btn: "AL",
+
+        continue_btn: "Davam et →",
+
+        footer_line1: "© 2022–2030 Piton Shop. Bütün hüquqlar qorunur.",
+        footer_line2: "Pitonstan Respublikası",
+
+        modal_title: "XƏTA",
+        modal_text: "SİZ HAL-HAZIRDA PITONSTAN ƏRAZİSİNDƏ DEYİLSİNİZ.<br>BU SƏBƏBDƏN SİZ MƏHSUL ALARA BİLMƏZSİNİZ.",
+        modal_close: "Bağla"
+      },
+
+      en: {
+        home: "Home",
+        catalog: "Catalog",
+        contacts: "Contacts",
+
+        cat_clothes: "Category: Clothes",
+        cat_premium: "Category: Premium",
+        cat_arms: "Category: Armament",
+
+        item_black_tshirt_name: "PitCloth Black T-Shirt",
+        item_blue_tshirt_name: "PitCloth Blue T-Shirt",
+        item_black_print_tshirt_name: "PitCloth Black Printed T-Shirt",
+        item_red_tshirt_name: "PitCloth Red T-Shirt",
+        item_cirig_shirt_name: "PitCloth Series \"Cirig\" Grey T-Shirt",
+        item_jeans_platypus_name: "PitCloth Jeans + UltraNose Platypus Gift",
+        item_blue_shorts_name: "PitCloth Blue Shorts",
+        item_blue_jeans_name: "PitCloth Blue Jeans",
+        item_ripped_jeans_name: "PitCloth Ripped Jeans",
+
+        item_ultra_women_name: "UltraNose Full Lak Women Edition",
+        item_ultra_mirror_name: "UltraNose Full Lak Mirror Edition",
+        item_ultra_platypus_name: "UltraNose Full Lak Platypus",
+        item_ultra_special_name: "UltraNose Full Lak Special",
+        item_ultra_budget_name: "UltraNose Budget Platypus",
+        item_ultra_taxta_name: "UltraNose Taxta Platypus",
+        item_ultra_taxta_lak_name: "UltraNose Taxta Lak Platypus",
+        item_ultra_gold_name: "UltraNose Full Lak Gold Edition",
+        item_gpu_name: "PVIDIA GATAIKIS 1001010110110 GPU",
+
+        item_tank_p10_name: "Tank P-10",
+        item_ekb1_name: "Bomber EKB-1",
+        item_ekb11_name: "Bomber EKB-11",
+        item_fsa1_name: "FSA-1",
+        item_rep5_name: "Artillery REP-5",
+        item_bup14_name: "BUP-14 Drone",
+        item_pg1_name: "PG-1",
+        item_fsa76_name: "FSA-76",
+        item_tank_p12_name: "Tank P-12",
+        item_script_name: "/smuzi_samirs_eqqaf.bat",
+        item_qku39_name: "Helicopter QKU-39",
+        item_pg2_name: "PG-2",
+        item_pg3_name: "PG-3",
+        item_qku1_name: "Helicopter QKU-1",
+
+        buy_btn: "BUY",
+
+        continue_btn: "Continue →",
+
+        footer_line1: "© 2022–2030 Piton Shop. All rights reserved.",
+        footer_line2: "Republic of Pitonstan",
+
+        modal_title: "ERROR",
+        modal_text: "YOU ARE NOT IN PITONSTAN.<br>THEREFORE YOU CANNOT PURCHASE ITEMS.",
+        modal_close: "Close"
+      }
+    };
+
+    // collect live elements for translation
+    const langButtons = document.querySelectorAll('.lang-btn');
+    const translatable = document.querySelectorAll('[data-lang]');
+    const htmlTag = document.documentElement;
+
+    // language switching logic
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.langset;
+
+        // set <html lang="..">
+        htmlTag.lang = lang;
+
+        // update active button highlight
+        langButtons.forEach(b => b.classList.remove('active'));
+        document
+          .querySelectorAll(`[data-langset="${lang}"]`)
+          .forEach(b => b.classList.add('active'));
+
+        // replace content of every element with data-lang="key"
+        translatable.forEach(el => {
+          const key = el.dataset.lang;
+          // safety check
+          if (translations[lang] && translations[lang][key]) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+      });
+    });
+
+    // modal open/close helpers
+    function openModal() {
+      // Show error modal
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    // expose to global for inline onclick handlers
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+  </script>
+</body>
+</html>

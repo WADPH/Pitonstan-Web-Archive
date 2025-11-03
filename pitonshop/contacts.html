@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size:16px;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piton Shop — Contacts</title>
+  <link rel="icon" type="image/png" href="images/Pitonshop1.png">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Open Sans', sans-serif;
+      background-color: #121212;
+      color: #eaeaea;
+      line-height: 1.6;
+    }
+
+    /* ===== HEADER (aligned with other pages) ===== */
+    header {
+      background: linear-gradient(90deg, #1e1e1e, #2c2c2c);
+      border-bottom: 3px solid #ffcc66;
+      padding: 10px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .logo img {
+      height: 85px;
+      width: auto;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: #ffcc66; }
+
+    .lang-switch {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 1px solid #ffcc66;
+      color: #ffcc66;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn:hover,
+    .lang-btn.active {
+      background: #ffcc66;
+      color: #1a1a1a;
+    }
+
+    /* burger menu icon */
+    .menu-icon {
+      display: none;
+      font-size: 2rem;
+      color: #ffcc66;
+      cursor: pointer;
+      padding-right: 20px;
+    }
+
+    #menu-toggle {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .menu-icon {
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      nav ul {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background: #1a1a1a;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        border-top: 2px solid #ffcc66;
+        padding: 10px 0;
+      }
+
+      nav ul li {
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+      }
+
+      #menu-toggle:checked ~ nav ul {
+        display: flex;
+      }
+
+      .lang-switch {
+        margin-top: 10px;
+      }
+    }
+
+    /* ===== PAGE CONTENT ===== */
+    main { flex:1; }
+
+    .contacts {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px 40px;
+    }
+
+    .hero {
+      text-align:center;
+      padding: 40px 20px 10px;
+      background: radial-gradient(circle at center, #1c1c1c 0%, #0b0b0b 100%);
+      border-bottom: 2px solid #ffcc66;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      color: #ffcc66;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+    }
+
+    .addr-card {
+      background:#1a1a1a;
+      border:1px solid #292929;
+      border-radius:10px;
+      padding:20px;
+      margin-top:20px;
+      box-shadow:0 0 10px rgba(0,0,0,.3);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+
+    .addr-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 20px rgba(255,204,102,.2);
+    }
+
+    .addr-card h3 {
+      color:#ffcc66;
+      margin:0 0 10px;
+      font-family:'Montserrat', sans-serif;
+      font-size:1.2rem;
+    }
+
+    .addr-list {
+      margin:0;
+      padding-left:18px;
+    }
+
+    .addr-list li {
+      margin:6px 0;
+    }
+
+    .address-wall {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-top: 2px solid #ffcc66;
+      margin-top: 20px;
+    }
+
+
+    .address-wall-0 {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-top: 20px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background:#0b0b0b;
+      color:#ccc;
+      text-align:center;
+      padding:25px 15px;
+      border-top:3px solid #ffcc66;
+      font-family:'Oswald', sans-serif;
+      margin-top:auto;
+    }
+
+    footer p {
+      margin:6px 0;
+      font-size:.9rem;
+    }
+
+    footer b {
+      color:#ffcc66;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER (same structure as index.html / shop_page1.html) -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <img src="images/logo/logo.png" alt="PitonShop Logo">
+      </div>
+
+      <input type="checkbox" id="menu-toggle">
+      <label for="menu-toggle" class="menu-icon">☰</label>
+
+      <nav>
+        <ul>
+          <li><a href="index.html" data-lang="home">Home</a></li>
+          <li><a href="shop_page1.html" data-lang="catalog">Catalog</a></li>
+          <li><a href="contacts.html" data-lang="contacts">Contacts</a></li>
+          <li class="lang-switch">
+            <button class="lang-btn active" data-langset="en">EN</button>
+            <button class="lang-btn" data-langset="ru">RU</button>
+            <button class="lang-btn" data-langset="az">AZ</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1 data-lang="title">Store Addresses</h1>
+  </section>
+
+  <main>
+    <div class="contacts">
+            <img
+        src="images/logo/logo.png"
+        alt="Piton Shop Wall"
+        class="address-wall-0"
+        width="3798"
+        height="1826"
+      >
+      <div class="addr-card">
+        <h3 data-lang="addresses_hdr">Addresses</h3>
+        <ul class="addr-list">
+          <li data-lang="a1">City Feodofiya, Academy of Pythonology St., Block PT2F</li>
+          <li data-lang="a2">City Pitoniya, Street of Great Magarram, 46</li>
+          <li data-lang="a3">City Puffet, Sadagat St., 12</li>
+          <li data-lang="a4">City Dasshaq Qala, Syvaboda St., Block 5A</li>
+          <li data-lang="a5">City Fatmat, Tursiy St., Hole 3</li>
+          <li data-lang="a6">City Farraqat, Galustuk St., First seam</li>
+          <li data-lang="a7">City Feodofiya, Street of Great Magarram, 46</li>
+        </ul>
+      </div>
+
+      <img
+        src="images/contacts/LogoWall.png"
+        alt="Piton Shop Wall"
+        class="address-wall"
+        width="3798"
+        height="1826"
+      >
+    </div>
+  </main>
+
+  <footer>
+    <p data-lang="footer_line1">© 2022–2030 Piton Shop. All rights reserved.</p>
+    <p><b data-lang="footer_line2">Republic of Pitonstan</b></p>
+  </footer>
+
+  <script>
+    // i18n dictionary
+    const translations = {
+      ru: {
+        home: "Главная",
+        catalog: "Каталог",
+        contacts: "Контакты",
+
+        title: "Адреса Магазинов",
+        addresses_hdr: "Адреса",
+        a1: "Город Feodofiya, Улица академии Питонологии, Блок PT2F",
+        a2: "Город Pitoniya, Улица имени Великого Магаррама, 46",
+        a3: "Город Puffet, Улица имени Садагат, 12",
+        a4: "Город Dasshaq Qala, Улица Сывабода, Блок 5A",
+        a5: "Город Fatmat, Улица Турсий, 3 дырка",
+        a6: "Город Farraqat, Улица Галустук, Первый шов",
+        a7: "Город Feodofiya, Улица имени Великого Магаррама, 46",
+
+        footer_line1: "© 2022–2030 Piton Shop. Все права защищены.",
+        footer_line2: "Republic of Pitonstan"
+      },
+      az: {
+        home: "Əsas səhifə",
+        catalog: "Kataloq",
+        contacts: "Əlaqə",
+
+        title: "Mağazaların Ünvanları",
+        addresses_hdr: "Ünvanlar",
+        a1: "Feodofiya şəh., Pythonologiya Akademiyası küç., PT2F blok",
+        a2: "Pitoniya şəh., Böyük Maqərrəm küç., 46",
+        a3: "Puffet şəh., Sədaqət küç., 12",
+        a4: "Dasshaq Qala şəh., Sıvaboda küç., 5A blok",
+        a5: "Fatmat şəh., Tursiy küç., 3-cü dəlik",
+        a6: "Farraqat şəh., Qalustuk küç., Birinci tikiş",
+        a7: "Feodofiya şəh., Böyük Maqərrəm küç., 46",
+
+        footer_line1: "© 2022–2030 Piton Shop. Bütün hüquqlar qorunur.",
+        footer_line2: "Pitonstan Respublikası"
+      },
+      en: {
+        home: "Home",
+        catalog: "Catalog",
+        contacts: "Contacts",
+
+        title: "Store Addresses",
+        addresses_hdr: "Addresses",
+        a1: "City Feodofiya, Academy of Pythonology St., Block PT2F",
+        a2: "City Pitoniya, Street of Great Magarram, 46",
+        a3: "City Puffet, Sadagat St., 12",
+        a4: "City Dasshaq Qala, Syvaboda St., Block 5A",
+        a5: "City Fatmat, Tursiy St., Hole 3",
+        a6: "City Farraqat, Galustuk St., First seam",
+        a7: "City Feodofiya, Street of Great Magarram, 46",
+
+        footer_line1: "© 2022–2030 Piton Shop. All rights reserved.",
+        footer_line2: "Republic of Pitonstan"
+      }
+    };
+
+    // language controls (same logic as on other pages)
+    const langButtons = document.querySelectorAll('.lang-btn');
+    const translatable = document.querySelectorAll('[data-lang]');
+    const htmlTag = document.documentElement;
+
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.langset;
+
+        // set <html lang="..">
+        htmlTag.lang = lang;
+
+        // update active button visual state
+        langButtons.forEach(b => b.classList.remove('active'));
+        document
+          .querySelectorAll(`[data-langset="${lang}"]`)
+          .forEach(b => b.classList.add('active'));
+
+        // swap text
+        translatable.forEach(el => {
+          const key = el.dataset.lang;
+          if (translations[lang] && translations[lang][key]) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

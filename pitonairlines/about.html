@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="keywords" content="PitonAirlines, about, careers, partnerships, loyalty">
+  <meta name="description" content="About PitonAirlines">
+  <title>PitonAirlines — About</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+
+  <style>
+    :root {
+      --brand-red: #b3252e;
+      --brand-blue: #043a67;
+      --bg-body: #f5f7fa;
+      --text-main: #0f1a2c;
+      --text-dim: #4a5568;
+      --text-light: #ffffff;
+      --radius-lg: 24px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+      --shadow-card: 0 24px 48px rgba(0,0,0,0.18);
+      --shadow-soft: 0 16px 32px rgba(0,0,0,0.08);
+      --gradient-brand: radial-gradient(circle at 20% 20%, var(--brand-blue) 0%, #092d4a 40%, var(--brand-red) 100%);
+      --gradient-linear: linear-gradient(90deg,var(--brand-blue) 0%,var(--brand-red) 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Open Sans", sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    h1,h2,h3,h4,h5,h6 {
+      margin: 0 0 .5em;
+      line-height: 1.2;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    p {
+      margin: 0 0 1em;
+      font-size: 0.95rem;
+      color: var(--text-dim);
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(15,26,44,0.55);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      color: var(--text-light);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      color: var(--text-light);
+      font-weight: 600;
+      font-size: .9rem;
+      line-height: 1.2;
+    }
+
+    .logo-wrap img {
+      height: 68px;
+      width: auto;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
+    }
+
+    .logo-wrap .subline {
+      font-size:.7rem;
+      opacity:.6;
+      font-weight:400;
+      line-height:1.2;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-light);
+    }
+
+    .nav-links a {
+      color: var(--text-light);
+      position: relative;
+      line-height: 1.2;
+      padding: 6px 0;
+    }
+
+    .nav-links a:not(.cta-btn-header):hover::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: -2px;
+      height: 2px;
+      background-color: var(--text-light);
+      border-radius: 2px;
+    }
+
+    .cta-btn-header {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient-linear);
+      border: 0;
+      color: var(--text-light);
+      font-weight: 600;
+      font-size: 0.8rem;
+      line-height: 1.3;
+      padding: 10px 20px;
+      min-width: 140px;
+      min-height: 40px;
+      border-radius: 18px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.5);
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .cta-btn-header:hover {
+      filter: brightness(1.08);
+    }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .burger-line {
+      width: 26px;
+      height: 3px;
+      background-color: var(--text-light);
+      border-radius: 2px;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 2000;
+    }
+
+    .mobile-sheet {
+      background: #0f1a2c;
+      background-image: var(--gradient-linear);
+      color: var(--text-light);
+      width: 80%;
+      max-width: 270px;
+      height: 100%;
+      padding: 24px;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .mobile-close {
+      align-self: flex-end;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-light);
+      cursor: pointer;
+    }
+
+    .mobile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .mobile-links a {
+      color: var(--text-light);
+    }
+
+    .mobile-lang {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      font-size: .8rem;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .mobile-lang-label {
+      font-size:.8rem;
+      line-height:1.2;
+      color:#fff;
+      font-weight:500;
+    }
+
+    .lang-btn {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      line-height: 1.2;
+      font-size: .75rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .lang-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .lang-btn.active {
+      background:#fff;
+      color:#000;
+      border-color:#fff;
+      font-weight:600;
+    }
+
+    .mobile-cta {
+      margin-top: auto;
+      background: #fff;
+      color: var(--brand-red);
+      border: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      text-align: center;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.6);
+    }
+
+    .mobile-cta:hover {
+      filter: brightness(1.05);
+    }
+
+    @media (max-width:768px) {
+      .nav-links { display: none; }
+      .burger { display: flex; }
+    }
+
+    /* ABOUT PAGE LAYOUT */
+    .about-wrap {
+      max-width: 1280px;
+      margin: 40px auto 60px;
+      padding: 0 16px;
+      display: grid;
+      gap: 32px;
+    }
+
+    .about-head {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .about-title {
+      font-size: clamp(1.4rem,1vw+1rem,1.8rem);
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .about-desc {
+      font-size: .95rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .about-sections {
+      display: grid;
+      gap: 24px;
+    }
+
+    .about-card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 20px 16px;
+      border-top: 4px solid var(--brand-red);
+      min-height: 200px;
+      position: relative;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      scroll-margin-top: 80px;
+    }
+
+    .about-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.22);
+      border-top-color: var(--brand-blue);
+    }
+
+    .about-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--brand-blue);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .about-card-text {
+      font-size: .9rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .about-card-text p {
+      font-size: .9rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin-bottom: 1em;
+    }
+
+    .subheading {
+      font-size: .8rem;
+      font-weight:600;
+      color: var(--brand-blue);
+      text-transform: uppercase;
+      letter-spacing:.03em;
+      margin:16px 0 8px;
+    }
+
+    /* FAQ styles */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    details.faq-item {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-soft);
+      padding: 12px 16px;
+      font-size: .9rem;
+      color: var(--text-dim);
+    }
+
+    details.faq-item summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--brand-blue);
+      outline: none;
+      list-style: none;
+    }
+
+    details.faq-item[open] summary {
+      color: var(--brand-red);
+    }
+
+    .faq-answer {
+      margin-top: 8px;
+      color: var(--text-dim);
+      font-weight: 400;
+      line-height: 1.4;
+      font-size: .9rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background: radial-gradient(circle at 20% 20%, rgba(4,58,103,0.6) 0%, rgba(0,0,0,0.9) 70%);
+      color: #fff;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding: 40px 16px 24px;
+      margin-top: 60px;
+      box-shadow: 0 -24px 48px rgba(0,0,0,0.8);
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+      gap: 24px 32px;
+    }
+
+    .footer-col-title {
+      font-size: .8rem;
+      font-weight: 600;
+      color: #fff;
+      margin: 0 0 12px;
+      line-height: 1.3;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+
+    .footer-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+
+    .footer-list li {
+      margin: 6px 0;
+    }
+
+    .footer-list a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: color .15s ease;
+    }
+
+    .footer-list a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 32px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      font-size: .8rem;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.6);
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .8rem;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .footer-brand img {
+      height: 32px;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+    }
+
+    .footer-legal-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-legal-links a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: .8rem;
+      transition: color .15s ease;
+    }
+
+    .footer-legal-links a:hover {
+      color: #fff;
+    }
+
+    .footer-copy {
+      color: rgba(255,255,255,0.6);
+    }
+
+    .footer-lang {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      font-size: .75rem;
+      line-height: 1.2;
+    }
+
+    .footer-lang-label {
+      color: rgba(255,255,255,0.6);
+      font-weight: 500;
+      line-height:1.2;
+    }
+
+    .footer-lang .lang-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      line-height: 1.2;
+      font-size: .75rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .footer-lang .lang-btn.active {
+      background:#fff;
+      color:#000;
+      border-color:#fff;
+      font-weight:600;
+    }
+
+    .footer-lang .lang-btn:hover {
+      background: rgba(255,255,255,0.18);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav-inner">
+
+      <div class="logo-wrap">
+        <img src="images/airlineslogo-removebg-preview.png" alt="PitonAirlines">
+        <div style="display:flex;flex-direction:column;">
+          <span style="font-size:.8rem;opacity:.8;font-weight:500;">PitonAirlines</span>
+          <span class="subline" data-i18n="brand.tagline">fly smart</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="index.html" data-i18n="nav.home">Home</a>
+        <a href="tickets.html" data-i18n="nav.schedule">Schedule</a>
+        <a class="cta-btn-header" href="products.html" data-i18n="nav.buy">Buy tickets</a>
+      </nav>
+
+      <div class="burger" id="burgerBtn">
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-sheet">
+      <div class="mobile-close" id="mobileClose">✕</div>
+
+      <nav class="mobile-links">
+        <a href="index.html" data-i18n="nav.home">Home</a>
+        <a href="tickets.html" data-i18n="nav.schedule">Schedule</a>
+        <a href="products.html" data-i18n="nav.buy">Buy tickets</a>
+      </nav>
+
+      <div class="mobile-lang">
+        <span class="mobile-lang-label" data-i18n="lang.label">Language:</span>
+        <div class="lang-btn" data-lang="en">EN</div>
+        <div class="lang-btn" data-lang="ru">RU</div>
+        <div class="lang-btn" data-lang="az">AZ</div>
+      </div>
+
+      <a class="mobile-cta" href="products.html" data-i18n="nav.buy">Buy tickets</a>
+    </div>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <section class="about-wrap">
+    <div class="about-head">
+      <div class="about-title" data-i18n="about.headline">
+        PitonAirlines information
+      </div>
+      <p class="about-desc" data-i18n="about.sub">
+        Who we are. How we work. How to fly with us. How to work with us.
+      </p>
+    </div>
+
+    <div class="about-sections" id="about-sections">
+      <!-- dynamic -->
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.company">Company</div>
+        <ul class="footer-list">
+          <li><a href="about.html#about" data-i18n="footer.about">About PitonAirlines</a></li>
+          <li><a href="about.html#partnerships" data-i18n="footer.partnerships">Partnerships</a></li>
+          <li><a href="about.html#careers" data-i18n="footer.careers">Careers</a></li>
+          <li><a href="about.html#press" data-i18n="footer.press">Press center</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.services">Services</div>
+        <ul class="footer-list">
+          <li><a href="tickets.html" data-i18n="footer.schedule">Flight schedule</a></li>
+          <li><a href="products.html" data-i18n="nav.buy">Buy tickets</a></li>
+          <li><a href="#" data-i18n="footer.status">Flight status</a></li>
+          <li><a href="#" data-i18n="footer.baggage">Baggage rules</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.support">Support</div>
+        <ul class="footer-list">
+          <li><a href="about.html#faq" data-i18n="footer.faq">FAQ</a></li>
+          <li><a href="#" data-i18n="footer.contact">Contact support</a></li>
+          <li><a href="#" data-i18n="footer.refund">Ticket refund & change</a></li>
+          <li><a href="#" data-i18n="footer.safety">Flight safety</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title" data-i18n="footer.ecosystem">Pitonstan ecosystem</div>
+        <ul class="footer-list">
+          <li><a href="https://bank.pitonstan.top" target="_blank" rel="noopener noreferrer">PitBank</a></li>
+          <li><a href="about.html#miles" data-i18n="footer.miles">PitonMiles loyalty</a></li>
+          <li><a href="about.html#corp" data-i18n="footer.corporate">Corporate travel</a></li>
+          <li><a href="about.html#pilot" data-i18n="footer.pilot">Pilot career</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <div class="footer-brand">
+        <img src="images/airlineslogo-removebg-preview.png" alt="PitonAirlines">
+        <span data-i18n="footer.brand">PitonAirlines · Republic of Pitonstan</span>
+      </div>
+
+      <div class="footer-legal-links">
+        <a href="#" data-i18n="legal.conditions">Conditions of carriage</a>
+        <a href="#" data-i18n="legal.privacy">Privacy policy</a>
+        <a href="#" data-i18n="legal.cookies">Cookies</a>
+      </div>
+
+      <div class="footer-lang">
+        <span class="footer-lang-label" data-i18n="lang.label">Language:</span>
+        <div class="lang-btn" data-lang="en">EN</div>
+        <div class="lang-btn" data-lang="ru">RU</div>
+        <div class="lang-btn" data-lang="az">AZ</div>
+      </div>
+
+      <div class="footer-copy" data-i18n="legal.copyright">
+        2023-2030 © All rights reserved
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    /* ===== CONTENT DATA ===== */
+
+    const sectionsOrder = [
+      "about",
+      "partnerships",
+      "careers",
+      "press",
+      "faq",
+      "miles",
+      "corp",
+      "pilot"
+    ];
+
+    const sectionTitles = {
+      en: {
+        about: "About PitonAirlines",
+        partnerships: "Partnerships",
+        careers: "Careers",
+        press: "Press center",
+        faq: "FAQ",
+        miles: "PitonMiles loyalty",
+        corp: "Corporate travel",
+        pilot: "Pilot career"
+      },
+      ru: {
+        about: "О PitonAirlines",
+        partnerships: "Партнёрства",
+        careers: "Вакансии",
+        press: "Пресс-центр",
+        faq: "Частые вопросы",
+        miles: "PitonMiles (программа лояльности)",
+        corp: "Корпоративные перелёты",
+        pilot: "Карьера пилота"
+      },
+      az: {
+        about: "PitonAirlines haqqında",
+        partnerships: "Tərəfdaşlıqlar",
+        careers: "Karyera",
+        press: "Mətbuat mərkəzi",
+        faq: "Tez-tez verilən suallar",
+        miles: "PitonMiles loyallıq proqramı",
+        corp: "Korporativ uçuşlar",
+        pilot: "Pilot karyerası"
+      }
+    };
+
+    const sectionsContent = {
+      ru: {
+        about: `
+<p><span class="subheading">Кто мы</span><br>
+PitonAirlines — независимая авиакомпания Республики Питонстан. Мы летаем туда, куда другие перевозчики не хотят летать, потому что им «невыгодно», «небезопасно», «слишком далеко» или «слишком странно для маркетинга». Нам всё равно. У нас простая миссия: соединять людей и рынки напрямую.</p>
+
+<p><span class="subheading">Модель</span><br>
+1) Прямые рейсы «точка-точка». Без бессмысленных пересадок в дорогих хабах.<br>
+2) Прозрачные цены. Базовый тариф даёт сам перелёт и ручную кладь. Остальное покупается по факту. Никто не навязывает «пакет Комфорт Премиум Ультра» по умолчанию.<br>
+3) Минимальная бюрократия. Билет можно оформить за минуты. Документы проверяются у ворот посадки, а не на десяти постах подряд.</p>
+
+<p><span class="subheading">Безопасность</span><br>
+Флот проходит технический осмотр строго по регламенту Питонстана. Регламент Питонстана строже, чем думает большинство пассажиров. Мы не выпускаем в рейс то, что нам самим стыдно посадить на крыло. Экипажи обязаны останавливать вылет при малейшем сомнении. За попытку давления на пилота сотрудник получает мгновенное увольнение.</p>
+
+<p><span class="subheading">Почему это дешево</span><br>
+Мы не покупаем дорогой маркетинг, не делаем лаунжи «для селфи», не платим агентам-посредникам. Мы тратим деньги на топливо, техперсонал и пилотов. Всё остальное — опционально.</p>
+        `,
+
+        partnerships: `
+<p><span class="subheading">С кем мы уже работаем</span><br>
+Мы взаимодействуем с:<br>
+• региональными аэропортами, которым нужны прямые международные вылеты;<br>
+• локальными туроператорами (трекинг, экскурсии, гастрономические туры);<br>
+• поставщиками бортового питания из местных кафе и сетей стрит-фуда;<br>
+• PitBank (эквайринг, корпоративные платежи, финансирование топлива).</p>
+
+<p><span class="subheading">Что нам интересно</span><br>
+1) Карго. Если вам надо быстро перевезти 200 кг груза из Питонии в Донер Тайм, мы готовы обсудить грузовой блок прямо на пассажирском рейсе.<br>
+2) Код-шер. Если у вас есть локальная сеть перелётов, а у нас — выход из Питонстана, логично объединить расписания и продавать единый маршрут.<br>
+3) Совместные акции. Пакеты «перелёт + проживание + еда + трансфер» для туристов и бизнес-групп.</p>
+
+<p><span class="subheading">Как предложить партнёрство</span><br>
+• Опишите географию (откуда / куда).<br>
+• Опишите поток (люди, карго, госструктуры, разовый чартер).<br>
+• Укажите, кто платит счёт и в какой валюте.<br>
+После этого запрос быстро попадает в отдел маршрутизации. Ответ стандартно даётся в пределах короткого цикла согласования.</p>
+        `,
+
+        careers: `
+<p><span class="subheading">Кому мы платим</span><br>
+Пилоты. Бортпроводники. Техники. Операторы наземной службы. Специалисты по безопасности полётов. Планирование маршрутов. Финансы и топливо. Нам не нужны «мотивационные спикеры». Нам нужны люди, которые держат рейс в расписании и не ломаются под давлением.</p>
+
+<p><span class="subheading">Наши принципы найма</span><br>
+1) Дисциплина важнее «харизмы».<br>
+2) Реакция в стрессовой ситуации важнее дипломов, которые никто не проверяет на практике.<br>
+3) Английский или русский обязателен. Знание азербайджанского считается плюсом на южных направлениях.<br>
+4) Честность в отчётности. Фальсификация тех.журнала — это бан навсегда.</p>
+
+<p><span class="subheading">Как подать заявку</span><br>
+Отправьте резюме и (если пилот) налёт по типам. Укажите гражданство и возможность перелёта в страны назначения (визовые ограничения бывают жёсткие). Вам не ответят «мы рассмотрим когда-нибудь». Вам или скажут «да, нам это подходит», или «нет, мы не можем вас сертифицировать под наши правила».</p>
+
+<p id="pilot" class="subheading">Курсант → капитан</p>
+<p>У нас есть внутренняя траектория роста. Курсант может подняться до правого кресла, потом до командира борта. Это реально. Это уже случалось. Никаких пустых обещаний уровня «когда-нибудь потом».</p>
+        `,
+
+        press: `
+<p><span class="subheading">Для СМИ</span><br>
+Пресс-центр обрабатывает:<br>
+• интервью с руководством;<br>
+• съёмки внутри кабины и салона;<br>
+• съёмку в аэропорту под брендом PitonAirlines;<br>
+• комментарии по безопасностям, инцидентам, отклонениям от расписания.</p>
+
+<p><span class="subheading">Политика доступа на борт</span><br>
+Журналист без аккредитации — это просто пассажир. Пассажир не может снимать технику, рабочие терминалы, схемы безопасности и лица членов экипажа без разрешения. Это не «нам нечего скрывать», это физическая безопасность рейса.</p>
+
+<p><span class="subheading" id="faq">Как запросить комментарий</span><br>
+• Укажите тему, дедлайн, формат цитаты (текст / аудио / видео).<br>
+• Уточните, будет ли публикация переведена и где выйдет.<br>
+Если вопрос связан с инцидентом, мы даём только подтверждённые факты. Без предположений и без эмоциональных вставок. Наши ответы всегда сухие по структуре.</p>
+        `,
+
+        faq: `
+<p>Ниже базовые вопросы. Прочитайте перед обращением в поддержку.</p>
+
+<div class="faq-list">
+
+  <details class="faq-item">
+    <summary>1. Какие документы нужны для вылета?</summary>
+    <div class="faq-answer">
+      Для внутренних рейсов Питонстана обычно достаточно паспорта гражданина Питонстана или внутреннего ID. Для международных направлений нужен загранпаспорт. В некоторые страны требуется виза. Если документов нет — в аэропорт ехать бессмысленно.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>2. Сколько багажа включено в базовый тариф?</summary>
+    <div class="faq-answer">
+      В билет входит ручная кладь до 8 кг и габарит до размеров стандартной кабины. Регистрируемый багаж оплачивается отдельно по весу и направлению. Тарифы зависят от маршрута.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>3. Можно ли провозить еду и напитки?</summary>
+    <div class="faq-answer">
+      Твёрдая еда допустима. Жидкости и соусы подчиняются стандартным правилам контроля безопасности вылета. Алкоголь можно везти запечатанным в разрешённых объёмах, но употреблять на борту нельзя.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>4. Что нельзя брать на борт?</summary>
+    <div class="faq-answer">
+      Запрещены любые опасные предметы и самодельные техустройства, которые могут быть интерпретированы как оружие. Экипаж имеет право снять вас с рейса без возврата денег, если вы несёте риск для борта.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>5. Я опоздал на посадку. Билет сгорает?</summary>
+    <div class="faq-answer">
+      Да. Посадка закрывается строго по времени. Экипаж не обязан ждать пассажира. Если вы опоздали, билет считается использованным. Это не обсуждается на стойке.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>6. Можно вернуть билет?</summary>
+    <div class="faq-answer">
+      Возврат зависит от тарифа. Некоторые билеты невозвратные. У возвратных удерживается комиссия. Если рейс отменён по нашей вине, деньги возвращаются полностью или предлагается альтернатива.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>7. Что с безопасностью полёта?</summary>
+    <div class="faq-answer">
+      Каждый борт проходит техосмотр по регламенту Питонстана. Пилот имеет право отменить вылет. Давление на пилота и техников запрещено политикой компании. Это жёстко.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>8. Беременным можно летать?</summary>
+    <div class="faq-answer">
+      До поздних сроков — обычно да, но на последних неделях мы вправе запросить медицинскую справку о допуске к полёту. Если вы не можете подтвердить безопасность для себя и плода, экипаж может снять вас с рейса.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>9. Животные допускаются?</summary>
+    <div class="faq-answer">
+      Малые животные допускаются в салон по отдельному платному оформлению. Животное должно быть в переноске, спокойным и неагрессивным. Крупные животные летят в грузовом отсеке по правилам конкретного аэропорта прибытия.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>10. Как работает PitonMiles?</summary>
+    <div class="faq-answer">
+      За каждый перелёт вы получаете мили. Мили можно тратить на апгрейд класса, допбагаж, раннюю посадку, доступ в лаунж в узловых аэропортах Питонстана.
+    </div>
+  </details>
+
+</div>
+        `,
+
+        miles: `
+<p><span class="subheading">Что такое PitonMiles</span><br>
+PitonMiles — внутренняя программа лояльности PitonAirlines. Мы не копируем западные схемы, где мили обесцениваются каждые полгода. Правило простое: вы летаете — вы накапливаете баланс. Баланс тратится как валюта внутри нашей экосистемы.</p>
+
+<p><span class="subheading">Как зарабатывать</span><br>
+• Перелёт по любому направлению, даже самому дешёвому, даёт мили.<br>
+• Дополнительные мили за рейсы в «сложные» регионы (дальние, ночные, нерегулярные).<br>
+• Иногда мы делаем акции совместно с PitBank. Оплата картой PitBank даёт повышенный коэффициент накопления.</p>
+
+<p><span class="subheading" id="corp">На что потратить</span><br>
+1) Повышение класса обслуживания, если свободные кресла есть.<br>
+2) Ещё один чемодан в багаж без доплаты живыми деньгами.<br>
+3) Доступ в наш лаунж (он функциональный, не пафосный: еда, связь, тишина).</p>
+
+<p>Мили не нужно «обналичивать». Они не сгорают раз в квартал внезапно. Если когда-то правила сгорания поменяются, мы объявим это заранее, а не задним числом.</p>
+        `,
+
+        corp: `
+<p><span class="subheading">Что мы делаем для корпораций</span><br>
+У нас есть корпоративные и правительственные чартеры. Формат: выделенный самолёт, расписание под задачу, оплата без публичной публикации тарифа. Это полезно, когда группе надо быстро и без внимания прессы оказаться в другом регионе.</p>
+
+<p><span class="subheading">Типовые сценарии</span><br>
+• Командировка группы инженеров на объект.<br>
+• Срочная эвакуация персонала из региона нестабильности.<br>
+• Доставка груза вместе со сменной бригадой специалистов.<br>
+• Правительственные визиты в дружественные территории.</p>
+
+<p><span class="subheading">Условия</span><br>
+Мы требуем официального контактного лица и ясного запроса: кто летит, куда, какой багаж, какой уровень секретности. Если формулировка мутная, борт не взлетит.</p>
+        `,
+
+        pilot: `
+<p><span class="subheading">Почему пилотам у нас интересно</span><br>
+1) Прямые рейсы в нетипичные точки. Это значит реальную работу, а не одно и то же «туда-сюда» по 45 минут.<br>
+2) Возможность роста внутри компании. Командир борта — это достижимый статус, а не лозунг в брошюре.<br>
+3) Чёткие правила безопасности. Если вы как командир говорите «нет, мы не летим», никто сверху не переедет вас админресурсом. Это официальная доктрина.</p>
+
+<p><span class="subheading">Требования</span><br>
+• Налёт и типы воздушных судов, подтверждённые документально.<br>
+• Психологическая устойчивость. Паника не допускается.<br>
+• Готовность летать ночью и в сложную метеообстановку при условии, что машина признана годной.</p>
+
+<p><span class="subheading">Обучение</span><br>
+Мы обучаем кадетов по стандартам Питонстана и выдаём внутренний допуск. Дальше идёт чек в реальном неучебном маршруте под контролем инструктора. Если вы проходите — вы работаете. Если нет — вы не летаете под нашим позывным.</p>
+        `,
+
+      },
+
+      en: {
+        about: `
+<p><span class="subheading">Who we are</span><br>
+PitonAirlines is an independent carrier based in the Republic of Pitonstan. We fly where big carriers say “not worth it,” “too hard,” or “brand risk.” We do not chase prestige. We connect places that actually need connection.</p>
+
+<p><span class="subheading">Model</span><br>
+1) Point to point. No useless hub layovers in overpriced airports.<br>
+2) Transparent pricing. Base fare = seat + small cabin bag. You add what you actually need.<br>
+3) Low bureaucracy. Ticketing in minutes. Document control at boarding, not at five redundant counters.</p>
+
+<p><span class="subheading">Safety</span><br>
+Aircraft are maintained under Pitonstan regulation. That regulation is strict. Crews have the right to cancel a flight if they see a risk. Pressuring a pilot to “just go anyway” is a firing offense.</p>
+
+<p><span class="subheading">Why it’s affordable</span><br>
+We spend money on fuel, mechanics, pilots. We do not spend money on marketing theater, mood lighting, and fake “exclusive lounges.”</p>
+        `,
+
+        partnerships: `
+<p><span class="subheading">Who we work with</span><br>
+• Regional airports that want direct outbound service.<br>
+• Local tour operators (trekking, food tours, remote expeditions).<br>
+• Onboard catering suppliers from real street food, not generic frozen trays.<br>
+• PitBank for settlement, fuel finance, and corporate payment rails.</p>
+
+<p><span class="subheading">What we want</span><br>
+1) Cargo capacity sharing.<br>
+2) Code-share with regional carriers to stitch networks.<br>
+3) Joint packages: flight + transfer + lodging + food for groups.</p>
+
+<p><span class="subheading">How to propose</span><br>
+Tell us: route, volume (pax or cargo), payer, currency. We route it to operations. You get a straight answer, not “we’ll circle back in Q4.”</p>
+        `,
+
+        careers: `
+<p><span class="subheading">Who we hire</span><br>
+Pilots, cabin crew, line maintenance, ramp crew, safety specialists, routing and dispatch, fuel and finance. We do not need motivational speakers. We need people who keep an aircraft on schedule without lying about the tech state.</p>
+
+<p><span class="subheading">Hiring logic</span><br>
+1) Discipline beats charisma.<br>
+2) Stress handling beats pretty CVs.<br>
+3) English or Russian is required. Azerbaijani is a plus on southern routes.<br>
+4) Zero tolerance for falsified maintenance logs.</p>
+
+<p><span class="subheading">Applying</span><br>
+Send CV plus (for pilots) logged hours by type. Include citizenship and any visa limits. You either get “yes we can seat you in our system” or “no we cannot certify you under Pitonstan rules.” No vague promises.</p>
+
+<p id="pilot" class="subheading">Cadet → Captain</p>
+<p>We run internal progression. Cadets can move to right seat, then command. This is real, documented, and already happened.</p>
+        `,
+
+        press: `
+<p><span class="subheading">Press operations</span><br>
+We handle:<br>
+• interview requests,<br>
+• filming on board,<br>
+• shooting inside PitonAirlines zones at terminals,<br>
+• factual statements about safety, incidents, or delays.</p>
+
+<p><span class="subheading">Onboard filming</span><br>
+A random passenger with a camera is still a passenger. You cannot film cockpit controls, crew faces, or internal safety procedures without clearance. This is not PR paranoia. This is flight security.</p>
+
+<p><span class="subheading" id="faq">How to request comment</span><br>
+Give us topic, deadline, quote format (text/audio/video), and where it will be published. For incident-related topics we only provide confirmed facts. We do not speculate.</p>
+        `,
+
+        faq: `
+<p>Read before contacting support.</p>
+
+<div class="faq-list">
+
+  <details class="faq-item">
+    <summary>1. What documents do I need?</summary>
+    <div class="faq-answer">
+      Domestic routes usually require Pitonstan ID or passport. International routes need a valid foreign passport and sometimes visa. No valid ID means no boarding.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>2. How much baggage is included?</summary>
+    <div class="faq-answer">
+      Base fare includes one cabin item up to 8 kg. Checked baggage is extra and priced per route and weight.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>3. Can I bring food?</summary>
+    <div class="faq-answer">
+      Solid food is fine. Liquids follow standard security rules. Alcohol must stay sealed and you cannot self-serve it during flight.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>4. What items are banned?</summary>
+    <div class="faq-answer">
+      Anything considered hazardous or a potential weapon. Crew can offload you with no refund if you present risk to the aircraft.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>5. I missed boarding. Do I lose the ticket?</summary>
+    <div class="faq-answer">
+      Yes. Boarding closes on time. The crew is not required to wait. If you show up late, the ticket is considered flown.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>6. Can I get a refund?</summary>
+    <div class="faq-answer">
+      Depends on fare. Some are non-refundable. Refundable fares include a fee. If we cancel the flight, you get refund or re-route.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>7. How safe is it?</summary>
+    <div class="faq-answer">
+      Aircraft are inspected under Pitonstan rules. Pilots can abort. Management cannot overrule a safety stop. This is policy.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>8. Can pregnant passengers fly?</summary>
+    <div class="faq-answer">
+      Usually yes, but near due date we can request a medical fit-to-fly note. If you cannot present it, crew may deny boarding.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>9. Can I bring animals?</summary>
+    <div class="faq-answer">
+      Small animals with paid confirmation may travel in cabin in proper carriers. Larger animals go in hold subject to arrival airport rules.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>10. How does PitonMiles work?</summary>
+    <div class="faq-answer">
+      You earn miles on every flown segment. You can redeem for upgrade, baggage, early boarding, and lounge access.
+    </div>
+  </details>
+
+</div>
+        `,
+
+        miles: `
+<p><span class="subheading">What PitonMiles is</span><br>
+PitonMiles is PitonAirlines' internal loyalty program. You earn balance by actually flying. You redeem inside our ecosystem. No fake “points inflation every quarter.”</p>
+
+<p><span class="subheading">Earning</span><br>
+• Every ticket earns miles.<br>
+• Hard routes (night / remote / low-frequency) give bonus miles.<br>
+• Paying with PitBank cards may apply multipliers during promos.</p>
+
+<p><span class="subheading" id="corp">Redeeming</span><br>
+Upgrade class when seats exist. Add checked baggage with miles instead of cash. Enter our functional lounge in Pitonstan hubs (quiet work zone, food, comms).</p>
+
+<p>Miles do not randomly evaporate every few months without warning. If expiry rules ever change, we will announce ahead of time.</p>
+        `,
+
+        corp: `
+<p><span class="subheading">Corporate missions</span><br>
+We run dedicated charters for companies and state structures. You get a whole aircraft, custom timing, and low visibility if needed. Useful for urgent deployment, evacuation, site visits, or secure cargo + staff transport.</p>
+
+<p><span class="subheading">Use cases</span><br>
+• Engineering teams to critical sites.<br>
+• Extraction of personnel from unstable regions.<br>
+• Government visits under controlled media exposure.<br>
+• Cargo + escort crew in one movement.</p>
+
+<p><span class="subheading">Requirements</span><br>
+We need a clear request: who flies, where, what cargo, what confidentiality level, who pays. Vague briefs get rejected. We don't launch blind.</p>
+        `,
+
+        pilot: `
+<p><span class="subheading">Why pilots choose us</span><br>
+1) Real routes, not just boring shuttle loops.<br>
+2) Actual path to command, already proven inside the company.<br>
+3) Safety authority: captain decision is final. Operations cannot force a go decision if the captain says “no.”</p>
+
+<p><span class="subheading">Requirements</span><br>
+Documented hours, aircraft type history, stable under stress, able to fly night/rough-weather if aircraft is cleared.</p>
+
+<p><span class="subheading">Training</span><br>
+We certify cadets under Pitonstan standards. You fly supervised real sectors. If you clear that, you enter the roster. If you don't, you don't fly under our call sign.</p>
+        `
+      },
+
+      az: {
+        about: `
+<p><span class="subheading">Biz kimik</span><br>
+PitonAirlines Pitonstan Respublikasında yerləşən müstəqil aviaşirkətdir. Biz böyük aviaşirkətlərin “çətin”, “mənasız”, “riskli brend” hesab etdiyi istiqamətlərə uçuruq. Məqsədimiz real ehtiyacı olan şəhərləri birbaşa birləşdirməkdir.</p>
+
+<p><span class="subheading">Model</span><br>
+1) Birbaşa reyslər. Artıq tranzit yoxdur.<br>
+2) Şəffaf qiymət. Baza tarif = yer + əl yükü. Qalanı ayrıca seçilir.<br>
+3) Minimum bürokratiya. Bileti bir neçə dəqiqəyə almaq olur. Sənədlər əsasən uçuş qapısında yoxlanır.</p>
+
+<p><span class="subheading">Təhlükəsizlik</span><br>
+Təyyarələr Pitonstan standartına görə baxışdan keçir. Ekipaj təhlükə görərsə uçuşu ləğv edə bilər. Pilotun qərarına təzyiq qadağandır.</p>
+
+<p><span class="subheading">Niyə ucuzdur</span><br>
+Pul yanacağa, texniki xidmətə və pilotlara gedir. Biz bahalı reklam şousu almırıq.</p>
+        `,
+
+        partnerships: `
+<p><span class="subheading">Kiminlə işləyirik</span><br>
+• Regional hava limanları.<br>
+• Yerli tur operatorları və bələdçilər.<br>
+• Bort yeməyi üçün real mətbəx təminatçıları.<br>
+• PitBank (ödənişlər və yanacaq maliyyələşdirilməsi).</p>
+
+<p><span class="subheading">Nə axtarırıq</span><br>
+1) Yük daşınması üçün blok yerlər.<br>
+2) Kod-şer və şəbəkə birləşməsi.<br>
+3) Paket təkliflər: uçuş + transfer + qalma + yemək qruplar üçün.</p>
+
+<p><span class="subheading">Təklif necə göndərilir</span><br>
+Marşrut, həcmi (sərnişin və ya yük), ödəyən tərəf və valyuta yazılır. Biz bunu əməliyyat qrupuna ötürürük və siz konkret cavab alırsınız.</p>
+        `,
+
+        careers: `
+<p><span class="subheading">Biz kimə ehtiyac duyuruq</span><br>
+Pilotlar, bort bələdçiləri, texniki heyət, yer xidməti, təhlükəsizlik, marşrut planlama, yanacaq və maliyyə. Motivasiya şousu lazım deyil. Nizam-intizam və operativ həll lazımdır.</p>
+
+<p><span class="subheading">Seçim prinsipləri</span><br>
+1) İntizam xarizmanı üstələyir.<br>
+2) Stress altında davranış diplomdan daha real göstəricidir.<br>
+3) İngilis və ya rus dili vacibdir. Azərbaycan dili cənub istiqamətlərində üstünlükdür.<br>
+4) Saxta texniki jurnal qadağandır. Bu dərhal diskvalifikasiyadır.</p>
+
+<p><span class="subheading">Necə müraciət olunur</span><br>
+CV göndərin. Pilotlar uçuş saatlarını və tipini göstərsin. Vətəndaşlıq və viza məhdudiyyətlərini qeyd edin. Ya “uyğunsunuz”, ya da “biz sizi Pitonstan qaydalarına görə sertifikatlaşdıra bilmirik”. Boş vədlər verilmir.</p>
+
+<p id="pilot" class="subheading">Kadet → Kapitan</p>
+<p>Daxili yüksəliş sistemi var. Kadet əvvəl sağ oturacaqda, sonra kapitan kimi uçuşa çıxa bilər. Bu realdır və artıq olub.</p>
+        `,
+
+        press: `
+<p><span class="subheading">Mətbuatla iş</span><br>
+Biz aşağıdakıları koordinasiya edirik:<br>
+• rəhbərliklə müsahibə müraciətləri;<br>
+• bortda çəkiliş icazəsi;<br>
+• PitonAirlines zonasında çəkiliş;<br>
+• təhlükəsizlik və gecikmə barədə rəsmi şərhlər.</p>
+
+<p><span class="subheading">Bortda çəkiliş qaydası</span><br>
+Sadəcə kamera götürən sərnişin jurnalist sayılmır. Kokpit avadanlığını, heyətin üzünü və təhlükəsizlik prosedurlarını icazəsiz çəkmək olmaz. Bu təhlükəsizlik qaydasıdır.</p>
+
+<p><span class="subheading" id="faq">Şərh necə istənilir</span><br>
+Mövzu, son müddət, format (mətin / audio / video) və dərc yeri göstərilməlidir. Hadisə bağlıdırsa biz yalnız təsdiqlənmiş faktları veririk. Fərziyyə təqdim etmirik.</p>
+        `,
+
+        faq: `
+<p>Dəstəyə yazmazdan əvvəl oxuyun.</p>
+
+<div class="faq-list">
+
+  <details class="faq-item">
+    <summary>1. Hansı sənədlər lazımdır?</summary>
+    <div class="faq-answer">
+      Daxili reyslər üçün adətən Pitonstan şəxsiyyət vəsiqəsi və ya pasport kifayətdir. Beynəlxalq reys üçün xarici pasport və bəzən viza tələb olunur.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>2. Baza tarifinə hansı baqaj daxildir?</summary>
+    <div class="faq-answer">
+      8 kq-a qədər əl yükü daxildir. Qeydiyyatdan keçən baqaj ayrıca ödənilir və marşrutdan asılıdır.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>3. Yemək götürmək olar?</summary>
+    <div class="faq-answer">
+      Bərk qidalar olar. Mayelər təhlükəsizlik qaydalarına tabedir. Alkoqol möhürlü qalmalıdır və uçuş zamanı sərnişin tərəfindən istifadə oluna bilməz.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>4. Hansı əşyalar qadağandır?</summary>
+    <div class="faq-answer">
+      Təhlükəli hesab olunan hər şey. Heyət sizi risk kimi görərsə reysdən çıxarma haqqına malikdir və vəsait geri qaytarılmaya bilər.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>5. Qapını qaçırdım. Bilet yanır?</summary>
+    <div class="faq-answer">
+      Bəli. Giriş vaxtında bağlanır. Təyyarə sizi gözləmək məcburiyyətində deyil. Gecikmisinizsə bilet istifadə olunmuş sayılır.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>6. Bileti qaytarmaq olar?</summary>
+    <div class="faq-answer">
+      Tarifdən asılıdır. Bəzi biletlər geri qaytarılmır. Geri qaytarılan tariflərdə komissiya tutulur. Uçuş bizim səbəbimizdən ləğv olunarsa pul ya qaytarılır ya da alternativ təklif olunur.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>7. Təhlükəsizlik necədir?</summary>
+    <div class="faq-answer">
+      Təyyarələr Pitonstan standartına uyğun yoxlanılır. Pilot risk görərsə uçuşu dayandıra bilər. Menecment bu qərarı məcburi dəyişə bilməz.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>8. Hamilə sərnişin uça bilər?</summary>
+    <div class="faq-answer">
+      Əksər hallarda bəli. Son həftələrdə uçuş üçün icazə arayışı tələb oluna bilər. Arayış yoxdursa heyət minməyə icazə verməyə bilər.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>9. Heyvan gətirmək olar?</summary>
+    <div class="faq-answer">
+      Kiçik heyvanlar ödənişli təsdiqlə salon daxilində konteynerdə uça bilər. Böyük heyvanlar baqaj bölməsində uçur və bu, təyinat hava limanının qaydasından asılıdır.
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>10. PitonMiles necə işləyir?</summary>
+    <div class="faq-answer">
+      Hər uçuş mil verir. Millər sinif yüksəltmə, əlavə baqaj, erkən minmə və lounge girişinə sərf oluna bilər.
+    </div>
+  </details>
+
+</div>
+        `,
+
+        miles: `
+<p><span class="subheading">PitonMiles nədir</span><br>
+PitonMiles PitonAirlines-in loyallıq proqramıdır. Siz real uçuşla mil yığırsınız və bu mili şirkət daxilində xərcləyirsiniz. Süni “dəyərsizləşmə” yoxdur.</p>
+
+<p><span class="subheading">Necə qazanılır</span><br>
+• Hər bilet mil verir.<br>
+• Çətin marşrutlara (gecə, uzaq regionlar) bonus mil düşür.<br>
+• Bəzən PitBank kartı ilə ödəniş zamanı əlavə əmsal tətbiq olunur.</p>
+
+<p><span class="subheading" id="corp">Necə xərclənir</span><br>
+Sinif yüksəltmək, əlavə baqajı pulla yox, millə ödəmək, Pitonstan hub-larında sakit lounge zonasına giriş almaq mümkündür.</p>
+
+<p>Millər xəbərsiz silinmir. Qayda dəyişsə əvvəlcədən elan ediləcək.</p>
+        `,
+
+        corp: `
+<p><span class="subheading">Korporativ uçuşlar</span><br>
+Biz şirkətlər və dövlət qurumları üçün xüsusi çarter reysləri təşkil edirik. Bu o deməkdir ki, bütün təyyarə sizə məxsusdur, vaxt cədvəli sizindir və lazım gələrsə diqqət cəlb etmir.</p>
+
+<p><span class="subheading">Tipik hallar</span><br>
+• Mühəndis qruplarının obyektə çatdırılması.<br>
+• Qeyri-sabit regiondan personalın təxliyəsi.<br>
+• Həssas yüklə birlikdə müşayiət heyətinin daşınması.<br>
+• Rəsmi səfərlər üçün qapalı logistika.</p>
+
+<p><span class="subheading">Şərtlər</span><br>
+Bizə dəqiq məlumat lazımdır: kim uçur, haraya, hansı yük, gizlilik səviyyəsi və kim ödəniş edir. Qeyri-müəyyən sifariş qəbul edilmir.</p>
+        `,
+
+        pilot: `
+<p><span class="subheading">Pilot üçün üstünlüklər</span><br>
+1) Standart “oradan-bura” monoton döngə deyil, real marşrutlar.<br>
+2) Kapitan səviyyəsinə real daxili yüksəliş imkanı.<br>
+3) Təhlükəsizlik qərarı kaptanın ixtiyarındadır. Əgər “uçmuruq” deyirsinizsə, bu, yekun qərardır.</p>
+
+<p><span class="subheading">Tələblər</span><br>
+Uçuş saatları və tip təsdiqi, stress altında sabit davranış, gecə və çətin hava şəraitində uçmağa hazırlıq (təyyarə texniki cəhətdən icazəlidirsə).</p>
+
+<p><span class="subheading">Təlim</span><br>
+Biz kadetləri Pitonstan standartına uyğun hazırlayırıq. Sonra real marşrutda təlimçi nəzarəti ilə uçuş olur. Keçirsinizsə heyətə daxil olursunuz. Keçmirsinizsə bizim çağırış siqnalımız altında uça bilmirsiniz.</p>
+        `
+      }
+    };
+
+    /* ===== STATIC I18N FOR HEADER/FOOTER ===== */
+
+    const i18n = {
+      en: {
+        "brand.tagline": "fly smart",
+
+        "nav.home": "Home",
+        "nav.schedule": "Schedule",
+        "nav.buy": "Buy tickets",
+
+        "lang.label": "Language:",
+
+        "about.headline": "PitonAirlines information",
+        "about.sub": "Who we are. How we work. How to fly with us. How to work with us.",
+
+        "footer.company": "Company",
+        "footer.about": "About PitonAirlines",
+        "footer.partnerships": "Partnerships",
+        "footer.careers": "Careers",
+        "footer.press": "Press center",
+
+        "footer.services": "Services",
+        "footer.schedule": "Flight schedule",
+        "footer.status": "Flight status",
+        "footer.baggage": "Baggage rules",
+
+        "footer.support": "Support",
+        "footer.faq": "FAQ",
+        "footer.contact": "Contact support",
+        "footer.refund": "Ticket refund & change",
+        "footer.safety": "Flight safety",
+
+        "footer.ecosystem": "Pitonstan ecosystem",
+        "footer.miles": "PitonMiles loyalty",
+        "footer.corporate": "Corporate travel",
+        "footer.pilot": "Pilot career",
+
+        "footer.brand": "PitonAirlines · Republic of Pitonstan",
+
+        "legal.conditions": "Conditions of carriage",
+        "legal.privacy": "Privacy policy",
+        "legal.cookies": "Cookies",
+        "legal.copyright": "2023-2030 © All rights reserved"
+      },
+
+      ru: {
+        "brand.tagline": "летайте с умом",
+
+        "nav.home": "Главная",
+        "nav.schedule": "Расписание",
+        "nav.buy": "Купить билеты",
+
+        "lang.label": "Язык:",
+
+        "about.headline": "Информация о PitonAirlines",
+        "about.sub": "Кто мы. Как мы работаем. Как с нами летать. Как у нас работать.",
+
+        "footer.company": "Компания",
+        "footer.about": "О PitonAirlines",
+        "footer.partnerships": "Партнёрства",
+        "footer.careers": "Вакансии",
+        "footer.press": "Пресс-центр",
+
+        "footer.services": "Сервисы",
+        "footer.schedule": "Расписание рейсов",
+        "footer.status": "Статус рейса",
+        "footer.baggage": "Багаж и правила провоза",
+
+        "footer.support": "Поддержка",
+        "footer.faq": "Частые вопросы",
+        "footer.contact": "Обратиться в поддержку",
+        "footer.refund": "Возврат и обмен билета",
+        "footer.safety": "Безопасность полётов",
+
+        "footer.ecosystem": "Экосистема Pitonstan",
+        "footer.miles": "PitonMiles (программа лояльности)",
+        "footer.corporate": "Корпоративные перелёты",
+        "footer.pilot": "Карьера пилота",
+
+        "footer.brand": "PitonAirlines · Республика Питонстан",
+
+        "legal.conditions": "Условия перевозки",
+        "legal.privacy": "Политика конфиденциальности",
+        "legal.cookies": "Cookies",
+        "legal.copyright": "2023-2030 © Все права защищены"
+      },
+
+      az: {
+        "brand.tagline": "ağıllı uçun",
+
+        "nav.home": "Əsas",
+        "nav.schedule": "Cədvəl",
+        "nav.buy": "Bilet al",
+
+        "lang.label": "Dil:",
+
+        "about.headline": "PitonAirlines məlumatı",
+        "about.sub": "Biz kimik. Necə işləyirik. Necə uça bilərsiniz. Necə bizdə işləyə bilərsiniz.",
+
+        "footer.company": "Şirkət",
+        "footer.about": "PitonAirlines haqqında",
+        "footer.partnerships": "Tərəfdaşlıqlar",
+        "footer.careers": "Karyera",
+        "footer.press": "Mətbuat mərkəzi",
+
+        "footer.services": "Xidmətlər",
+        "footer.schedule": "Uçuş cədvəli",
+        "footer.status": "Reysin statusu",
+        "footer.baggage": "Bağaj qaydaları",
+
+        "footer.support": "Dəstək",
+        "footer.faq": "Tez-tez verilən suallar",
+        "footer.contact": "Dəstək xidməti ilə əlaqə",
+        "footer.refund": "Biletin qaytarılması və dəyişdirilməsi",
+        "footer.safety": "Uçuş təhlükəsizliyi",
+
+        "footer.ecosystem": "Pitonstan ekosistemi",
+        "footer.miles": "PitonMiles loyallıq proqramı",
+        "footer.corporate": "Korporativ uçuşlar",
+        "footer.pilot": "Pilot karyerası",
+
+        "footer.brand": "PitonAirlines · Pitonstan Respublikası",
+
+        "legal.conditions": "Daşıma şərtləri",
+        "legal.privacy": "Məxfilik siyasəti",
+        "legal.cookies": "Kuki faylları",
+        "legal.copyright": "2023-2030 © Bütün hüquqlar qorunur"
+      }
+    };
+
+    let currentLang = "en";
+
+    /* ===== RENDER SECTIONS ===== */
+    function renderSections() {
+      const container = document.getElementById("about-sections");
+      container.innerHTML = "";
+
+      sectionsOrder.forEach(secKey => {
+        const card = document.createElement("section");
+        card.className = "about-card";
+        card.id = secKey;
+
+        const titleHTML = sectionTitles[currentLang][secKey] || "";
+        const bodyHTML = sectionsContent[currentLang][secKey] || "";
+
+        card.innerHTML = `
+          <div class="about-card-title">${titleHTML}</div>
+          <div class="about-card-text">${bodyHTML}</div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    /* ===== APPLY LANGUAGE ===== */
+    function applyLang(lang) {
+      currentLang = (lang in i18n) ? lang : "en";
+      const dict = i18n[currentLang];
+
+      // static text
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+
+      // lang button active state
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle(
+          "active",
+          btn.getAttribute("data-lang") === currentLang
+        );
+      });
+
+      document.documentElement.setAttribute("lang", currentLang);
+
+      // sections
+      renderSections();
+    }
+
+    function setupLangButtons() {
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const lang = btn.getAttribute("data-lang");
+          applyLang(lang);
+        });
+      });
+    }
+
+    /* ===== MOBILE MENU ===== */
+    const burgerBtn = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
+
+    burgerBtn?.addEventListener('click', () => {
+      mobileMenu.style.display = 'block';
+    });
+
+    mobileClose?.addEventListener('click', () => {
+      mobileMenu.style.display = 'none';
+    });
+
+    mobileMenu?.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        mobileMenu.style.display = 'none';
+      }
+    });
+
+    /* init */
+    setupLangButtons();
+    applyLang("en");
+  </script>
+
+</body>
+</html>
