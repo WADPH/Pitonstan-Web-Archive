@@ -23,7 +23,7 @@ $pass_exists = $mysql->query("SELECT `pass` FROM users WHERE `email` = '$login_e
 $passtest = $pass_exists->fetch_assoc();
 
 if ($email_exists->num_rows == 0) {
-    $emailexists_err = "<p style='color: #8B0000'>User with this email doesnt exist!</p>";
+    $emailexists_err = "<p style='color: #8B0000'>User with this email doesn't exist!</p>";
     setcookie('emailexists_err', $emailexists_err, time() + 86400);
     header("Location: login.php");
     exit();

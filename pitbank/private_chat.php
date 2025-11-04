@@ -1,306 +1,205 @@
 <?php
-//Warning
+// Bootstrap: session, i18n, DB
 session_start();
+require_once __DIR__."/i18n.php";
+require_once __DIR__."/db_connection.php";
 
-require_once "db_connection.php";
+// Resolve current user from cookies
+$username = 'Guest';
+if (!empty($_COOKIE['user_login'])) { $username = $_COOKIE['user_login']; }
+elseif (!empty($_COOKIE['whoisthis'])) { $username = $_COOKIE['whoisthis']; }
 
-//If auth = true
-$username = "Guest";
-if (!empty($_COOKIE['user_login'])) {
-    $username = $_COOKIE['user_login'];
-} elseif (!empty($_COOKIE['whoisthis'])) {
-    $username = $_COOKIE['whoisthis'];
+// Load current user row safely
+$userinfo = ['id'=>0,'username'=>$username];
+if ($stmt = $mysql->prepare("SELECT id, username FROM users WHERE username = ? LIMIT 1")) {
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $stmt->bind_result($uid, $uname);
+    if ($stmt->fetch()) {
+        $userinfo['id'] = (int)$uid;
+        $userinfo['username'] = $uname;
+    }
+    $stmt->close();
 }
 
-$userinfo_arr = $mysql->query("SELECT * FROM users WHERE `username` = '$username'");
-$userinfo = $userinfo_arr->fetch_assoc();
-
-
-// If it will shows user select page or chat page
+// If no "with" param: render user picker
 if (empty($_GET['with'])) {
-    // Setting in $users all users without himself
-    $users = $mysql->query("
-        SELECT id, username 
-        FROM users 
-        WHERE id != ".$userinfo['id']."
-        ORDER BY username
-    ");
-
-    // HTML
-    echo '<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PitBank - DM</title>
-        <link rel="icon" type="image/x-icon" href="img/PitBankIco.ico">
-        <style>
-            body {
-                margin: 0;
-                font-family: Arial, sans-serif;
-                background: #f5f5f5;
-            }
-            .container {
-                max-width: 800px;
-                margin: 30px auto;
-                padding: 20px;
-                background: white;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            }
-            .user-list {
-                margin-top: 20px;
-            }
-            .user-link {
-                display: block;
-                padding: 12px 15px;
-                margin: 8px 0;
-                background: #f9f9f9;
-                border-radius: 6px;
-                text-decoration: none;
-                color: #333;
-                transition: all 0.2s;
-                border-left: 4px solid #8B0000;
-            }
-            .user-link:hover {
-                background: #e9e9e9;
-                border-left: 4px solid #6A0000;
-            }
-            h2 {
-                color: #8B0000;
-                margin-top: 0;
-            }
-        </style>
-    </head>
-    <body> ';
-    require_once "header.php";
-    echo '
-
-        <div class="container">
-            <h2>Choose User for private chat</h2>
-            <div class="user-list">';
-
-    // Output of all users from $users
-    while($user = $users->fetch_assoc()) {
-        echo '<a href="private_chat.php?with='.$user['id'].'" class="user-link">';
-        echo htmlspecialchars($user['username']);
-        echo '</a>';
-    }
-
-    // HTML end
-    echo '</div></div></body></html>';
-    exit();
-}
-
-// Getting info about opponent
-$receiver_id = (int)$_GET['with'];
-$receiver = $mysql->query("SELECT username FROM users WHERE id = $receiver_id")->fetch_assoc();
-
-// Обработка отправки сообщения
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
-    $message = htmlspecialchars(trim($_POST['message']));
-
-    if (!empty($message)) {
-        $stmt = $mysql->prepare("
-            INSERT INTO private_messages 
-            (sender_id, receiver_id, message) 
-            VALUES (?, ?, ?)
-        ");
-        $stmt->bind_param("iis", $userinfo['id'], $receiver_id, $message);
+    // Get all users except self
+    $users = [];
+    if ($stmt = $mysql->prepare("SELECT id, username FROM users WHERE id <> ? ORDER BY username")) {
+        $stmt->bind_param("i", $userinfo['id']);
         $stmt->execute();
-
-        // After successfull sending
-        $messageLimit = 250;
-
-        // How much msg it has
-        $countQuery = "SELECT COUNT(*) as total FROM private_messages";
-        $countResult = $mysql->query($countQuery);
-        $rowlimit = $countResult->fetch_assoc();
-        $messageCount = $rowlimit['total'];
-
-        // if more than limit = delete
-        if ($messageCount > $messageLimit) {
-            $deleteQuery = "DELETE FROM private_messages ORDER BY timestamp ASC LIMIT 1";
-            $mysql->query($deleteQuery);
-        }
-
-        // Redirecting
-        header("Location: private_chat.php?with=".$receiver_id);
-        exit();
+        $res = $stmt->get_result();
+        while ($row = $res->fetch_assoc()) { $users[] = $row; }
+        $stmt->close();
     }
-}
-
-// Getting Chat
-$messages = $mysql->query("
-SELECT 
-    private_messages.*,
-    users.username as sender_name
-FROM private_messages
-JOIN users ON private_messages.sender_id = users.id
-WHERE 
-    (private_messages.sender_id = {$userinfo['id']} 
-    AND private_messages.receiver_id = $receiver_id) 
-    OR
-    (private_messages.sender_id = $receiver_id 
-    AND private_messages.receiver_id = {$userinfo['id']})
-ORDER BY private_messages.timestamp ASC
-LIMIT 250
-");
-?>
-
+    ?>
     <!DOCTYPE html>
-    <html lang="ru">
+    <html lang="<?= htmlspecialchars($lang) ?>">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PitBank - Chat with <?= htmlspecialchars($receiver['username']) ?></title>
+        <title><?= __t('dm_page_title') ?></title>
         <link rel="icon" type="image/x-icon" href="img/PitBankIco.ico">
         <style>
-            body {
-                margin: 0;
-                font-family: Arial, sans-serif;
-                background: #f5f5f5;
-            }
-
-            .chat-container {
-                max-width: 800px;
-                margin: 30px auto;
-                padding: 20px;
-                background: white;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            }
-            .chat-messages {
-                height: 300px;
-                overflow-y: auto;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                padding: 15px;
-                margin-bottom: 20px;
-                background: #f9f9f9;
-            }
-            .message {
-                margin: 8px 0;
-                padding: 10px 15px;
-                border-radius: 18px;
-                max-width: 70%;
-                word-wrap: break-word;
-            }
-            .my-message {
-                background-color: #e3f2fd;
-                margin-left: auto;
-                text-align: right;
-            }
-            .their-message {
-                background-color: #f1f1f1;
-                margin-right: auto;
-            }
-            .chat-input {
-                display: flex;
-                gap: 10px;
-                margin-bottom: 15px;
-            }
-            .chat-input textarea {
-                flex: 1;
-                padding: 12px;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                resize: none;
-                height: 80px;
-            }
-            .chat-input button {
-                background: #8B0000;
-                color: white;
-                border: none;
-                border-radius: 8px;
-                padding: 0 25px;
-                cursor: pointer;
-                height: 40px;
-                transition: background 0.3s;
-            }
-            .chat-input button:hover {
-                background: #6A0000;
-            }
-            .back-link {
-                display: inline-block;
-                margin-bottom: 15px;
-                color: #8B0000;
-                text-decoration: none;
-                font-weight: bold;
-            }
-            .back-link:hover {
-                text-decoration: underline;
-            }
-            small {
-                color: #777;
-                font-size: 0.8em;
-                margin-left: 10px;
-            }
+            :root{--primary:#8B0000;--secondary:#2D2D2D;--accent:#C0C0C0;--bg:#F8F8F8;--card:#FFFFFF;--text:#2D2D2D;--muted:#666;--border:#EAEAEA}
+            html[data-theme="dark"]{--primary:#B33A3A;--secondary:#E6E6E6;--accent:#4A4A4A;--bg:#0F1115;--card:#151821;--text:#E6E6E6;--muted:#A0A0A0;--border:#222634}
+            *{box-sizing:border-box}
+            body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+            .main{flex:1;max-width:900px;margin:24px auto;padding:0 16px;width:100%}
+            .card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.06);padding:18px}
+            h2{margin:0 0 12px 0;color:var(--secondary);font-size:1.3rem}
+            .list{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
+            .link{display:block;padding:12px 14px;border-radius:12px;border:1px solid var(--border);text-decoration:none;color:var(--text);background:var(--card)}
+            .link:hover{border-color:var(--primary)}
         </style>
     </head>
     <body>
-
-<?php require_once "header.php"?>
-
-    <div class="chat-container">
-        <a href="private_chat.php" class="back-link">← Back to user list</a>
-        <h2>Chat with <?= htmlspecialchars($receiver['username']) ?></h2>
-
-        <div class="chat-messages" id="chat-messages">
-            <?php while($msg = $messages->fetch_assoc()): ?>
-                <div class="message <?= $msg['sender_id'] == $userinfo['id'] ? 'my-message' : 'their-message' ?>">
-                    <strong><?= $msg['sender_id'] == $userinfo['id'] ? "" : htmlspecialchars($msg['sender_name']) . ":";?></strong>
-                    <span><?= htmlspecialchars($msg['message']) ?></span>
-                    <small><?= date('H:i', strtotime($msg['timestamp'])) ?></small>
-                </div>
-            <?php endwhile; ?>
+    <?php require_once __DIR__."/header.php"; ?>
+    <main class="main">
+        <div class="card">
+            <h2><?= __t('dm_choose_user') ?></h2>
+            <div class="list">
+                <?php foreach ($users as $u): ?>
+                    <a class="link" href="private_chat.php?with=<?= (int)$u['id'] ?>"><?= htmlspecialchars($u['username']) ?></a>
+                <?php endforeach; ?>
+            </div>
         </div>
-
-        <style>
-
-            .refresh-form button {
-                background: var(--primary);
-                color: white;
-                border: none;
-                border-radius: 8px;
-                padding: 0 25px;
-                cursor: pointer;
-                height: 40px;
-                transition: background 0.3s;
-            }
-
-            .refresh-form button:hover {
-                background: #6A0000;
-            }
-
-            .refresh-form {
-                text-align: right;
-            }
-        </style>
-
-        <form method="POST" class="chat-input">
-            <textarea name="message" placeholder="Your message..." required></textarea>
-            <button type="submit">Send</button>
-        </form>
-
-        <!-- Update Button -->
-        <form method="GET" class="refresh-form">
-            <button type="submit">Refresh Messages</button>
-        </form>
-    </div>
-
-    <script>
-        // Auto-scroll
-        window.onload = function() {
-            var chatMessages = document.getElementById('chat-messages');
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        };
-    </script>
-
-    <? require_once "footer.php"?>
+    </main>
+    <?php require_once __DIR__."/footer.php"; ?>
     </body>
     </html>
+    <?php
+    $mysql->close();
+    exit;
+}
 
-<?php
-$mysql->close();
+// Chat with a specific user
+$receiver_id = (int)$_GET['with'];
+
+// Load opponent name safely
+$receiver = ['username'=>'—'];
+if ($stmt = $mysql->prepare("SELECT username FROM users WHERE id = ? LIMIT 1")) {
+    $stmt->bind_param("i", $receiver_id);
+    $stmt->execute();
+    $stmt->bind_result($rname);
+    if ($stmt->fetch()) { $receiver['username'] = $rname; }
+    $stmt->close();
+}
+
+// Handle send
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
+    // Store raw text; escape on render
+    $message = trim($_POST['message']);
+    if ($message !== '') {
+        if ($stmt = $mysql->prepare("INSERT INTO private_messages (sender_id, receiver_id, message) VALUES (?, ?, ?)")) {
+            $stmt->bind_param("iis", $userinfo['id'], $receiver_id, $message);
+            $stmt->execute();
+            $stmt->close();
+        }
+        // Trim to last 250 messages
+        $res = $mysql->query("SELECT COUNT(*) AS total FROM private_messages");
+        $row = $res ? $res->fetch_assoc() : ['total'=>0];
+        $total = (int)($row['total'] ?? 0);
+        $limit = 250;
+        if ($total > $limit) {
+            $mysql->query("DELETE FROM private_messages ORDER BY timestamp ASC LIMIT ".intval($total - $limit));
+        }
+        header("Location: private_chat.php?with=".$receiver_id);
+        exit;
+    }
+}
+
+// Load thread
+$messages = [];
+if ($stmt = $mysql->prepare("
+    SELECT pm.sender_id, pm.message, pm.timestamp, u.username AS sender_name
+    FROM private_messages pm
+    JOIN users u ON pm.sender_id = u.id
+    WHERE (pm.sender_id = ? AND pm.receiver_id = ?)
+       OR (pm.sender_id = ? AND pm.receiver_id = ?)
+    ORDER BY pm.timestamp ASC
+    LIMIT 250
+")) {
+    $stmt->bind_param("iiii", $userinfo['id'], $receiver_id, $receiver_id, $userinfo['id']);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    while ($row = $res->fetch_assoc()) { $messages[] = $row; }
+    $stmt->close();
+}
 ?>
+<!DOCTYPE html>
+<html lang="<?= htmlspecialchars($lang) ?>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= __t('dm_page_title') ?></title>
+    <link rel="icon" type="image/x-icon" href="img/PitBankIco.ico">
+    <style>
+        :root{--primary:#8B0000;--secondary:#2D2D2D;--accent:#C0C0C0;--bg:#F8F8F8;--card:#FFFFFF;--text:#2D2D2D;--muted:#666;--border:#EAEAEA}
+        html[data-theme="dark"]{--primary:#B33A3A;--secondary:#E6E6E6;--accent:#4A4A4A;--bg:#0F1115;--card:#151821;--text:#E6E6E6;--muted:#A0A0A0;--border:#222634}
+        *{box-sizing:border-box}
+        body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+        .main{flex:1;max-width:900px;margin:24px auto;padding:0 16px;width:100%}
+        .card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.06);padding:18px}
+        .toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+        .back{display:inline-block;text-decoration:none;color:var(--primary);font-weight:800}
+        .title{font-weight:900;color:var(--secondary)}
+        .box{height:380px;overflow-y:auto;border:1px solid var(--border);border-radius:12px;padding:12px;background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent)}
+        .msg{margin:8px 0;padding:10px 14px;border-radius:18px;max-width:75%;word-wrap:break-word;border:1px solid var(--border);background:var(--card)}
+        .mine{margin-left:auto;background:#e3f2fd}
+        .theirs{margin-right:auto;background:#f1f1f1}
+        html[data-theme="dark"] .mine{background:#1f2a44}
+        html[data-theme="dark"] .theirs{background:#1b1f2a}
+        .meta{font-size:.8rem;color:var(--muted);margin-top:4px;text-align:right}
+        .row{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+        .ta{flex:1;min-width:220px;height:80px;padding:12px;border:1px solid var(--border);border-radius:12px;background:transparent;color:var(--text);resize:none}
+        .ta:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(139,0,0,.12)}
+        .btn{height:42px;padding:0 18px;border-radius:12px;border:1px solid var(--border);font-weight:800;cursor:pointer}
+        .btn-primary{background:var(--primary);color:#fff;border-color:transparent}
+        .btn-ghost{background:transparent;color:var(--text)}
+        @media (max-width:560px){.btn,.btn-primary,.btn-ghost{width:100%}}
+    </style>
+</head>
+<body>
+
+<?php require_once __DIR__."/header.php"; ?>
+
+<main class="main">
+    <div class="card">
+        <div class="toolbar">
+            <a class="back" href="private_chat.php">← <?= __t('dm_back_to_list') ?></a>
+            <div class="title"><?= __t('dm_with') ?> <?= htmlspecialchars($receiver['username']) ?></div>
+            <form method="GET">
+                <input type="hidden" name="with" value="<?= (int)$receiver_id ?>">
+                <button type="submit" class="btn btn-ghost"><?= __t('dm_refresh') ?></button>
+            </form>
+        </div>
+
+        <div class="box" id="chatBox" aria-live="polite">
+            <?php foreach ($messages as $m): ?>
+                <div class="msg <?= ($m['sender_id'] == $userinfo['id']) ? 'mine':'theirs' ?>">
+                    <?php if ($m['sender_id'] != $userinfo['id']): ?>
+                        <div style="font-weight:900;color:var(--primary)"><?= htmlspecialchars($m['sender_name']) ?></div>
+                    <?php endif; ?>
+                    <div><?= htmlspecialchars($m['message']) ?></div>
+                    <div class="meta"><?= htmlspecialchars(date('H:i', strtotime($m['timestamp']))) ?></div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <form method="POST" class="row" autocomplete="off">
+            <textarea class="ta" name="message" placeholder="<?= __t('dm_placeholder') ?>" required></textarea>
+            <button type="submit" class="btn btn-primary"><?= __t('dm_send') ?></button>
+        </form>
+    </div>
+</main>
+
+<?php require_once __DIR__."/footer.php"; ?>
+<script>
+// Auto-scroll to bottom on load
+(function(){const box=document.getElementById('chatBox');if(box){box.scrollTop=box.scrollHeight;}})();
+</script>
+</body>
+</html>
+<?php $mysql->close(); ?>

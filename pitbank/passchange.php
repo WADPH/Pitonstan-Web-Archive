@@ -1,192 +1,88 @@
+<?php
+// i18n first for lang and theme
+require_once __DIR__ . "/i18n.php";
+?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="<?= htmlspecialchars($lang) ?>">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>PitBank Change Pass</title>
     <link rel="icon" type="image/x-icon" href="img/PitBankIco.ico">
-    
     <style>
-        :root {
-            --primary: #8B0000;
-            --secondary: #2D2D2D;
-            --accent: #C0C0C0;
-        }
+        /* Tokens */
+        :root{--primary:#8B0000;--secondary:#2D2D2D;--accent:#C0C0C0;--bg:#F8F8F8;--card:#FFFFFF;--text:#2D2D2D;--muted:#666;--border:#EAEAEA}
+        html[data-theme="dark"]{--primary:#B33A3A;--secondary:#E6E6E6;--accent:#4A4A4A;--bg:#0F1115;--card:#151821;--text:#E6E6E6;--muted:#A0A0A0;--border:#222634}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
+        /* Base */
+        *{box-sizing:border-box}
+        body{margin:0;display:flex;flex-direction:column;min-height:100vh;background:var(--bg);color:var(--text)}
+        .main{flex:1;display:flex;justify-content:center;align-items:center;padding:32px 16px}
 
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background: #F8F8F8;
-        }
+        /* Card */
+        .card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.06);padding:24px;width:100%;max-width:520px}
+        h2{margin:0 0 14px 0;color:var(--secondary);font-size:1.3rem}
+        .hint{color:var(--muted);font-size:.95rem;margin-bottom:10px}
 
-        .header {
-            background: #dddddd;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            padding: 0 2rem;
-        }
+        .group{margin-bottom:14px}
+        label{display:block;color:var(--muted);margin-bottom:6px;font-size:.95rem}
+        .input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:transparent;color:var(--text)}
+        .input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(139,0,0,.12)}
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            height: 70px;
-        }
+        .btn{width:100%;height:44px;border-radius:12px;border:1px solid var(--border);font-weight:800;cursor:pointer}
+        .btn-primary{background:var(--primary);color:#fff;border-color:transparent}
+        .btn-primary:hover{filter:brightness(.95)}
 
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-right: 40px;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 20px;
-            margin-left: auto;
-        }
-
-        .nav-link {
-            color: var(--secondary);
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            font-size: 15px;
-        }
-
-        .nav-link:hover {
-            background: rgba(139,0,0,0.05);
-            color: var(--primary);
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-        }
-
-        .change-pass-form {
-            background: #dddddd;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #EEE;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .change-pass-form h2 {
-            color: var(--secondary);
-            margin-bottom: 30px;
-            font-size: 24px;
-            font-weight: 500;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            color: #666;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #DDD;
-            border-radius: 6px;
-            font-size: 15px;
-            transition: all 0.2s ease;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(139,0,0,0.1);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 10px;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #6A0000;
-        }
-
-        .footer {
-            background: var(--secondary);
-            color: white;
-            text-align: center;
-            padding: 25px;
-            margin-top: auto;
-        }
+        .alert{margin-top:6px;font-size:.9rem}
+        .err{color:#b81e1e}
+        .ok{color:#1f7a1f}
     </style>
 </head>
 <body>
-<?php require_once "header.php"; ?>
 
-<main class="main-content">
-    <div class="change-pass-form">
+<?php require_once __DIR__."/header.php"; ?>
+
+<main class="main">
+    <div class="card">
         <h2>Change Password</h2>
-        <form action="update_password.php" method="post">
-            <div class="form-group">
-                <label>Current Password</label>
-                <?php echo $_COOKIE["passwrong_err"] ?>
-                <input type="password" name="current_pass" class="form-control" required>
+        <div class="hint">Use at least 8 characters. Avoid common words.</div>
+
+        <?php
+        // Read feedback cookies safely
+        $errWrong = htmlspecialchars($_COOKIE['passwrong_err'] ?? '');
+        $errCheck = htmlspecialchars($_COOKIE['passcheck_err'] ?? '');
+        $okMsg    = htmlspecialchars($_COOKIE['success'] ?? '');
+        ?>
+
+        <?php if($errWrong): ?><div class="alert err"><?= $errWrong ?></div><?php endif; ?>
+        <?php if($errCheck): ?><div class="alert err"><?= $errCheck ?></div><?php endif; ?>
+        <?php if($okMsg):   ?><div class="alert ok"><?= $okMsg   ?></div><?php endif; ?>
+
+        <form action="update_password.php" method="post" autocomplete="off" novalidate>
+            <div class="group">
+                <label for="cur">Current Password</label>
+                <input id="cur" type="password" name="current_pass" class="input" required>
             </div>
-            <div class="form-group">
-                <label>New Password</label>
-                <input type="password" name="new_pass" class="form-control" required>
+            <div class="group">
+                <label for="newp">New Password</label>
+                <input id="newp" type="password" name="new_pass" class="input" required>
             </div>
-            <div class="form-group">
-                <label>Repeat New Password</label>
-                <?php echo $_COOKIE["passcheck_err"] ?>
-                <input type="password" name="repeat_pass" class="form-control" required>
-                <?php echo $_COOKIE["success"] ?>
+            <div class="group">
+                <label for="rep">Repeat New Password</label>
+                <input id="rep" type="password" name="repeat_pass" class="input" required>
             </div>
             <button type="submit" class="btn btn-primary">Update Password</button>
         </form>
     </div>
 </main>
 
-<?php require_once "footer.php";
+<?php
+require_once __DIR__."/footer.php";
 
-//removing login errors/succes
-setcookie("success", "", time() - 86400, "/");
-unset($_COOKIE['success']);
-setcookie("passcheck_err", "", time() - 86400, "/");
-unset($_COOKIE['passcheck_err']);
-setcookie("passwrong_err", "", time() - 86400, "/");
-unset($_COOKIE['passwrong_err']);
-
+/* Cleanup feedback cookies after render */
+foreach (['success','passcheck_err','passwrong_err'] as $c){
+    if(isset($_COOKIE[$c])){ setcookie($c, "", time()-86400, "/"); unset($_COOKIE[$c]); }
+}
 ?>
 </body>
 </html>

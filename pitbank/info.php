@@ -1,1 +1,1 @@
-<?php echo 'PHP работает!'; ?>
+<?php echo 'PHP WORKS!'; ?>
