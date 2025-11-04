@@ -2,7 +2,7 @@
 //Vars for DB connection
 $db_host = "127.0.0.1";  // Host
 $db_user = "root";       // Username
-$db_pass = "A0773565292";       // Pass
+$db_pass = "$def_strong";       // Pass Change this!
 $db_name = "pitbank";    // Name of DB
 
 // Creating connection
